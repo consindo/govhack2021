@@ -1,5 +1,6 @@
 <script>
   import { plan, roadPlan, processPlan, processRoadPlan } from './clients/aucklandtransport.js'
+  import Search from './Search.svelte'
 
   $: itineraries = []
 
@@ -20,7 +21,7 @@
 
 <main>
   <h1>govhack2021</h1>
-  <p>directions from Britomart to Panmure</p>
+  <Search />
   {#if itineraries.length === 0}
     Loading from Auckland Transport...
   {/if}
