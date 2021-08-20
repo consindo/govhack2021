@@ -14,6 +14,8 @@
   roadPlan('walk').then(processRoadPlan('walk')).then(cb)
   roadPlan('drive').then(processRoadPlan('drive')).then(cb)
 
+  const round = num => Math.round((num + Number.EPSILON) * 100) / 100
+
 </script>
 
 <main>
@@ -25,7 +27,8 @@
   {#each itineraries as itinerary}
     <h2>{itinerary.total.description}</h2>
     <p><strong>Minutes:</strong> {itinerary.total.timeMinutes}</p>
-    <p><strong>Distance:</strong> {Math.round(itinerary.total.distanceKilometers * 100) / 100}km</p>
+    <p><strong>Distance:</strong> {round(itinerary.total.distanceKilometers)}km</p>
+    <p><strong>Carbon Emissions:</strong> {round(itinerary.total.carbonEmissions)}kg</p>
   {/each}
 
 

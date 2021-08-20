@@ -2,6 +2,7 @@ const apikey = process.env.AT_APIKEY
 const endpoint = 'https://api.at.govt.nz'
 
 import { calculateDistance } from './distance.js'
+import { calculateCarbon } from './carbonEmissions.js'
 
 // at api wants commas to be encoded in some fields but not others
 const paramsToQuery = (params) =>
@@ -64,11 +65,20 @@ export const processPlan = (plan) => {
         )
       }
 
+      const mode = j.mode.toLowerCase()
+      const timeMinutes = j.duration / 60000
+      const carbonEmissions = calculateCarbon(
+        distanceKilometers,
+        timeMinutes,
+        mode
+      )
+
       return {
-        mode: j.mode.toLowerCase(),
+        mode,
         description: j.routeCode || '',
         distanceKilometers,
-        timeMinutes: j.duration / 60000,
+        timeMinutes,
+        carbonEmissions,
       }
     })
 
@@ -76,11 +86,13 @@ export const processPlan = (plan) => {
     const allRoutes = new Set()
     let distanceKilometers = 0
     let timeMinutes = 0
+    let carbonEmissions = 0
     legs.forEach((l) => {
       allModes.add(l.mode)
       allRoutes.add(l.description)
       distanceKilometers += l.distanceKilometers
       timeMinutes += l.timeMinutes
+      carbonEmissions += l.carbonEmissions
     })
     allModes.delete('walk')
     allRoutes.delete('')
@@ -90,7 +102,7 @@ export const processPlan = (plan) => {
         .join(' & ') + ` (${Array.from(allRoutes).join(' + ')})`
 
     return {
-      total: { description, distanceKilometers, timeMinutes },
+      total: { description, distanceKilometers, timeMinutes, carbonEmissions },
       legs,
     }
   })
@@ -111,12 +123,30 @@ export const processRoadPlan = (mode) => {
     )
     const timeMinutes = roadPlan.response.itineraries[0].DurationMinutes
     const description = mode.charAt(0).toUpperCase() + mode.slice(1)
+    const carbonEmissions = calculateCarbon(
+      distanceKilometers,
+      timeMinutes,
+      mode
+    )
 
     return {
       processed: [
         {
-          total: { description, distanceKilometers, timeMinutes },
-          legs: [{ mode, description: '', distanceKilometers, timeMinutes }],
+          total: {
+            description,
+            distanceKilometers,
+            timeMinutes,
+            carbonEmissions,
+          },
+          legs: [
+            {
+              mode,
+              description: '',
+              distanceKilometers,
+              timeMinutes,
+              carbonEmissions,
+            },
+          ],
         },
       ],
     }
