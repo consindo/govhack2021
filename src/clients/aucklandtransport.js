@@ -1,6 +1,8 @@
 const apikey = process.env.AT_APIKEY
 const endpoint = 'https://api.at.govt.nz'
 
+import { calculateDistance } from './distance.js'
+
 // at api wants commas to be encoded in some fields but not others
 const paramsToQuery = (params) =>
   Object.keys(params)
@@ -42,4 +44,81 @@ export const roadPlan = async (mode) => {
   const res = await fetch(`${endpoint}/journeyplanner/v2/roadPlan?${query}`)
   const data = await res.json()
   return data
+}
+
+export const processPlan = (plan) => {
+  const itineraries = plan.response.itineraries.map((i) => {
+    const legs = i.legs.map((j) => {
+      let distanceKilometers = 0
+      if (j.distanceExact) {
+        distanceKilometers = j.distanceExact / 1000
+      } else if (j.stops) {
+        // if the AT API doesn't tell us, we have to calculate
+        distanceKilometers = calculateDistance(
+          j.stops.map((k) => k.geometry.data)
+        )
+      } else {
+        distanceKilometers = calculateDistance(
+          [j.startLat, j.startLon],
+          [j.endLat, j.endLon]
+        )
+      }
+
+      return {
+        mode: j.mode.toLowerCase(),
+        description: j.routeCode || '',
+        distanceKilometers,
+        timeMinutes: j.duration / 60000,
+      }
+    })
+
+    const allModes = new Set()
+    const allRoutes = new Set()
+    let distanceKilometers = 0
+    let timeMinutes = 0
+    legs.forEach((l) => {
+      allModes.add(l.mode)
+      allRoutes.add(l.description)
+      distanceKilometers += l.distanceKilometers
+      timeMinutes += l.timeMinutes
+    })
+    allModes.delete('walk')
+    allRoutes.delete('')
+    const description =
+      Array.from(allModes)
+        .map((str) => str.charAt(0).toUpperCase() + str.slice(1))
+        .join(' & ') + ` (${Array.from(allRoutes).join(' + ')})`
+
+    return {
+      total: { description, distanceKilometers, timeMinutes },
+      legs,
+    }
+  })
+
+  return {
+    processed: itineraries,
+  }
+}
+
+export const processRoadPlan = (mode) => {
+  return (roadPlan) => {
+    const distanceKilometers = calculateDistance(
+      roadPlan.response.itineraries[0].PathSegments.map((i) =>
+        i.Polyline.split(';').map((j) =>
+          j.split(', ').map((k) => parseFloat(k))
+        )
+      ).flat()
+    )
+    const timeMinutes = roadPlan.response.itineraries[0].DurationMinutes
+    const description = mode.charAt(0).toUpperCase() + mode.slice(1)
+
+    return {
+      processed: [
+        {
+          total: { description, distanceKilometers, timeMinutes },
+          legs: [{ mode, description: '', distanceKilometers, timeMinutes }],
+        },
+      ],
+    }
+  }
 }

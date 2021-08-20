@@ -1,5 +1,5 @@
 <script>
-  import { plan, roadPlan } from './clients/aucklandtransport.js'
+  import { plan, roadPlan, processPlan, processRoadPlan } from './clients/aucklandtransport.js'
 
   const LOADING_STR = 'Loading from Auckland Transport...'
   $: ptPlan = LOADING_STR
@@ -7,16 +7,16 @@
   $: walkPlan = LOADING_STR
   $: drivePlan = LOADING_STR
 
-  plan().then(data => {
+  plan().then(processPlan).then(data => {
     ptPlan = JSON.stringify(data, '', 2)
   })
-  roadPlan('cycle').then(data => {
+  roadPlan('cycle').then(processRoadPlan('cycle')).then(data => {
     cyclePlan = JSON.stringify(data, '', 2)
   })
-  roadPlan('walk').then(data => {
+  roadPlan('walk').then(processRoadPlan('walk')).then(data => {
     walkPlan = JSON.stringify(data, '', 2)
   })
-  roadPlan('drive').then(data => {
+  roadPlan('drive').then(processRoadPlan('drive')).then(data => {
     drivePlan = JSON.stringify(data, '', 2)
   })
 
@@ -25,6 +25,7 @@
 
 <main>
   <h1>govhack2021</h1>
+  <p>directions from britomart to panmure</p>
   <h2>directions via public transport</h2>
   <pre>{ptPlan}</pre>
   <h2>directions via cycling</h2>
