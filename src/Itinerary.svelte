@@ -14,6 +14,19 @@
     }
   }
 
+  const getIcon = (description) => {
+    let icon = 'bus'
+    const desc = description.toLowerCase()
+    if (['walk', 'bike', 'ebike', 'drive'].includes(desc)) {
+      icon = desc
+    } else if (desc.substring(0, 5) === 'train') {
+      icon= 'train'
+    } else if (desc.substring(0, 5) === 'ferry') {
+      icon= 'ferry'
+    }
+    return `/modes/${icon}.svg`
+  }
+
   $: color = getColor(itinerary.total.description, itinerary.total.index)
   $: subtitle = (itinerary.total.description.split(' (')[1] || '').replace(
     ')',
@@ -26,12 +39,15 @@
 
 <li style="--itinerary-color: {color[0]}; --itinerary-text-color: {color[1]}">
   <div class="description">
-    <div class="route-info">
-      <h2>{itinerary.total.description.split(' (')[0]}</h2>
-      {#if subtitle !== ''}
-        <h4>{subtitle}</h4>
-      {/if}
-    </div>
+    <div class="route-info-wrapper">
+      <img src={getIcon(itinerary.total.description)}>
+      <div class="route-info">
+        <h2>{itinerary.total.description.split(' (')[0]}</h2>
+        {#if subtitle !== ''}
+          <h4>{subtitle}</h4>
+        {/if}
+      </div>
+  </div>
     <p>
       <strong>{timeConvert(itinerary.total.timeMinutes)}</strong> &middot; {round(
         itinerary.total.distanceKilometers,
@@ -70,6 +86,17 @@
   }
   .description {
     flex: 1;
+  }
+  .route-info-wrapper {
+    display: flex;
+    align-items: start;
+    padding-bottom: 1px;
+  }
+  .route-info-wrapper img {
+    margin-right: 7px;
+    margin-left: -2px;
+    margin-top: -1px;
+    opacity: 0.95;
   }
   .route-info {
     margin-bottom: 0.375rem;

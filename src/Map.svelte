@@ -119,6 +119,17 @@
         return
       }
 
+      const getStacking = () => {
+        if (id !== 'Walk' && loadedLayers['Walk'] !== undefined) {
+          return 'Walk'
+        } else if (id !== 'Bike' && loadedLayers['Bike'] !== undefined) {
+          return 'Bike'
+        } else if (id !== 'Drive' && loadedLayers['Drive'] !== undefined) {
+          return 'Drive'
+        }
+        return 'to-from'
+      }
+
       if (i.total.route === undefined) return
 
       map.addSource(id, {
@@ -140,7 +151,7 @@
             'line-width': 5,
           },
         },
-        'to-from'
+        getStacking()
       )
     })
   })
