@@ -218,6 +218,7 @@ export const processPlan = (plan, options) => {
           distanceKilometers,
           timeMinutes,
           carbonEmissions,
+          cost: i.fareHopAdult,
           index: 0,
           showLayer: true,
           route: geojson,

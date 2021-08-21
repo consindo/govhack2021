@@ -57,6 +57,9 @@
         itinerary.total.distanceKilometers,
         10
       )}<small>km</small>
+      {#if itinerary.total.cost}
+      &middot; ${(itinerary.total.cost / 100).toFixed(2)}
+      {/if}
     </p>
   </div>
   <div class="emissions">
