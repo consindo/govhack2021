@@ -10,12 +10,15 @@ const paramsToQuery = (params) =>
     .map((i) => `${encodeURIComponent(i)}=${params[i]}`)
     .join('&')
 
-export const plan = async () => {
+export const plan = async (search) => {
+  console.log(search)
+  const fromLoc = [search.from.lat, search.from.lon].join(',')
+  const toLoc = [search.to.lat, search.to.lon].join(',')
   const query = paramsToQuery({
-    from: encodeURIComponent('Britomart Transport Center, Auckland Central'),
-    to: encodeURIComponent('130 - Panmure Train Station, Panmure'),
-    fromLoc: '-36.844034,174.767193',
-    toLoc: '-36.89777,174.84967',
+    from: encodeURIComponent(search.from.address),
+    to: encodeURIComponent(search.to.address),
+    fromLoc,
+    toLoc,
     timeMode: 'A',
     date: encodeURIComponent('2021-08-20T17:26+12:00'),
     modes: 'BUS,TRAIN,FERRY',
@@ -33,11 +36,13 @@ export const plan = async () => {
   return data
 }
 
-export const roadPlan = async (mode) => {
+export const roadPlan = async (mode, search) => {
   // hardcoded for now
+  const fromLoc = [search.from.lat, search.from.lon].join(',')
+  const toLoc = [search.to.lat, search.to.lon].join(',')
   const query = paramsToQuery({
-    fromLoc: '-36.844034,174.767193',
-    toLoc: '-36.89777,174.84967',
+    fromLoc,
+    toLoc,
     'subscription-key': apikey,
     mode: mode.toUpperCase(),
   })

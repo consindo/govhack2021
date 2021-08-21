@@ -1,4 +1,5 @@
 export const calculateCarbon = (distanceKilometers, timeMinutes, mode) => {
+  if (timeMinutes === 0 || distanceKilometers === 0) return 0
   // grabbed from here: https://www.bikeradar.com/features/long-reads/cycling-environmental-impact/
   // need a better source
   const gkmModes = {

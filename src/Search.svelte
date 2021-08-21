@@ -1,6 +1,9 @@
 <script>
+  import { createEventDispatcher } from 'svelte'
   import { geocode } from './clients/aucklandtransport.js'
   import Loader from './Loader.svelte'
+
+  const dispatch = createEventDispatcher()
 
   let fromInput
   let toInput
@@ -11,11 +14,14 @@
   let fromResults = []
   let toResults = []
 
+  let fromOption = null
+  let toOption = null
+
   let timeout = 0
   let currentString = ''
   const search = (point) => (e) => {
     const searchString = e.currentTarget.value
-    if (currentString === searchString) return
+    if (currentString === searchString || searchString.trim() === '') return
     currentString = searchString
     clearTimeout(timeout)
     timeout = setTimeout(executeSearch(point, searchString), 750)
@@ -29,33 +35,57 @@
     }
 
     const result = await geocode(value)
+    const addresses = result.response.addresses.map(i => ({
+      address: i.address.split('\n')[0],
+      lat: i.lat,
+      lon: i.lng,
+    }))
     if (point === 'from') {
-      fromResults = result.response.addresses
+      fromResults = addresses
       fromLoading = false
     } else if (point === 'to') {
-      toResults = result.response.addresses
+      toResults = addresses
       toLoading = false
     }
   }
 
   const select = (point, index) => () => {
-    let resultsArray = fromResults
-    if (point === 'to') {
-      resultsArray = toResults
-    }
-
-    const item = resultsArray[index]
-    console.log(item)
-
-    fromResults = []
-    toResults = []
-
     if (point === 'from') {
+      let item  = fromResults[index]
+      fromOption = item
+      fromResults = []
       fromInput.value = item.address
+
       toInput.focus()
     } else if (point === 'to') {
+      let item  = toResults[index]
+      toOption = item
+      toResults = []
       toInput.value = item.address
     }
+  }
+
+  const confirmOptions = () => {
+    if (fromOption === null) {
+      fromInput.focus()
+      return
+    } else if (toOption === null) {
+      toInput.focus()
+      return
+    }
+
+    dispatch('search', {
+      from: {
+        address: fromOption.address,
+        lat: fromOption.lat,
+        lon: fromOption.lon,
+      },
+      to: {
+        address: toOption.address,
+        lat: toOption.lat,
+        lon: toOption.lon,
+      },
+    })
   }
 </script>
 
@@ -88,15 +118,31 @@
       </ul>
     </div>
   </div>
+  <div class="container">
+    <button on:click={confirmOptions}>Show my options</button>
+  </div>
 </div>
 
 <style>
   .search .container {
     position: relative;
-    width: 300px;
+  }
+  .search button {
+    width: 100%;
+    background: #6ab04c;
+    color: #fff;
+    border: 0;
+    border-radius: 5px;
+  }
+  .search button:hover {
+    background: #51863a;
+  }
+  .search button:active {
+    background: #335724;
   }
   .search input {
     width: 100%;
+    border-radius: 5px;
   }
   .search .results {
     position: absolute;
