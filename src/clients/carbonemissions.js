@@ -1,6 +1,4 @@
 import emissions from './emissions.json'
-console.log(emissions)
-
 export const calculateCarbon = (
   distanceKilometers,
   timeMinutes,

@@ -139,16 +139,16 @@
   }
   .search button {
     width: 100%;
-    background: #6ab04c;
+    background: #41ad49;
     color: #fff;
     border: 0;
     border-radius: 5px;
   }
   .search button:hover {
-    background: #51863a;
+    background: #3c9f43;
   }
   .search button:active {
-    background: #335724;
+    background: #34893a;
   }
   .search input {
     width: 100%;

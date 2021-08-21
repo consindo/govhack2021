@@ -87,6 +87,7 @@ export const processPlan = (plan) => {
             [j.endLat, j.endLon]
           )
         }
+        if (isNaN(distanceKilometers)) distanceKilometers = 0
 
         const mode = j.mode.toLowerCase()
         const timeMinutes = j.duration / 60000
@@ -174,6 +175,7 @@ export const processPlan = (plan) => {
           timeMinutes,
           carbonEmissions,
           route: geojson,
+          index: 0,
         },
         legs,
       }
@@ -185,6 +187,11 @@ export const processPlan = (plan) => {
         return true
       }
       return false
+    })
+    // add an index
+    .map((i, index) => {
+      i.total.index = index
+      return i
     })
 
   // only take the top 3 options
@@ -224,6 +231,7 @@ export const processRoadPlan = (roadPlan, mode, emissionOptions) => {
           timeMinutes,
           carbonEmissions,
           route: geojson,
+          index: 0,
         },
         legs: [
           {

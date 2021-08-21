@@ -1,17 +1,6 @@
 <script>
   import { onMount, afterUpdate } from 'svelte'
-
-  const getColor = (id) => {
-    if (id === 'Drive') {
-      return '#d35400'
-    } else if (id === 'Cycle') {
-      return '#6ab04c'
-    } else if (id === 'Walk') {
-      return '#22a6b3'
-    } else {
-      return '#4834d4'
-    }
-  }
+  import { getColor } from './clients/color.js'
 
   export let itineraries, mapBounds
 
@@ -24,7 +13,7 @@
     map = new mapboxgl.Map({
       container: 'map-content',
       zoom: 12,
-      style: 'mapbox://styles/consindo/ckjtsal580mwi19o1qyebauwv',
+      style: 'mapbox://styles/mapbox/light-v10',
       center: [174.769286, -36.843537],
     })
   })
@@ -80,7 +69,7 @@
           'line-cap': 'round',
         },
         paint: {
-          'line-color': getColor(id),
+          'line-color': getColor(id, i.total.index)[0],
           'line-width': 5,
         },
       })

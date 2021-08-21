@@ -7,6 +7,7 @@
   } from './clients/aucklandtransport.js'
   import Search from './Search.svelte'
   import Loader from './Loader.svelte'
+  import Itinerary from './Itinerary.svelte'
   import MapView from './Map.svelte'
 
   $: mapBounds = {}
@@ -16,8 +17,6 @@
   let cycleData = null
   let walkData = null
   let driveData = null
-
-  const round = (num) => Math.round((num + Number.EPSILON) * 100) / 100
 
   const handleSearch = async (event) => {
     loading = true
@@ -63,6 +62,7 @@
   ]
     .filter((i) => i !== null)
     .map((i) => {
+      console.log(i)
       return i.processed
     })
     .flat()
@@ -108,18 +108,11 @@
     {#if loading}
       <Loader />
     {/if}
-    {#each itineraries as itinerary}
-      <h2>{itinerary.total.description}</h2>
-      <p><strong>Minutes:</strong> {itinerary.total.timeMinutes}</p>
-      <p>
-        <strong>Distance:</strong>
-        {round(itinerary.total.distanceKilometers)}km
-      </p>
-      <p>
-        <strong>Carbon Emissions:</strong>
-        {round(itinerary.total.carbonEmissions)}kg
-      </p>
-    {/each}
+    <ul>
+      {#each itineraries as itinerary}
+        <Itinerary {itinerary} />
+      {/each}
+    </ul>
   </div>
   <div class="map">
     <MapView {itineraries} {mapBounds} />
@@ -137,16 +130,24 @@
     width: 300px;
     box-sizing: border-box;
     padding: 1rem;
-    border-right: 1px solid #ccc;
+    box-shadow: 1px 0 0 rgba(0,0,0,0.2);
     overflow-y: auto;
+    z-index: 2;
   }
 
   .results {
     width: 350px;
     box-sizing: border-box;
-    padding: 1rem;
-    border-right: 1px solid #ccc;
+    box-shadow: 1px 0 0 rgba(0,0,0,0.2);
+    background: #f4f4f4;
     overflow-y: auto;
+    z-index: 1;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
   }
 
   .map {
