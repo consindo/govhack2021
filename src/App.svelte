@@ -5,6 +5,7 @@
     processPlan,
     processRoadPlan,
   } from './clients/aucklandtransport.js'
+  import Splash from './Splash.svelte'
   import Search from './Search.svelte'
   import Loader from './Loader.svelte'
   import Itinerary from './Itinerary.svelte'
@@ -20,6 +21,9 @@
   let walkData = null
   let driveData = null
 
+  let searchFromText = ''
+  let searchToText = ''
+
   const handleSearch = async (event) => {
     loading = true
 
@@ -27,6 +31,9 @@
     walkData = null
     driveData = null
     mapBounds = event.detail
+
+    searchFromText = event.detail.from.address
+    searchToText = event.detail.to.address
 
     // this will then work async to get all the data into the right place
     await Promise.any([
@@ -149,6 +156,7 @@
     `${['Normal', 'Quick', 'Fast'][index]} (${speed}km/h)`
 </script>
 
+<Splash on:search={handleSearch} />
 <main>
   <div class="query">
     <div class="brand">
@@ -157,7 +165,7 @@
     </div>
     <div class="section-wrapper search-wrapper">
       <h2>Plan a journey</h2>
-      <Search on:search={handleSearch} />
+      <Search on:search={handleSearch} {searchFromText} {searchToText} />
     </div>
     <div>
       <div class="section-wrapper">

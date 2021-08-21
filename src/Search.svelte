@@ -5,6 +5,8 @@
 
   const dispatch = createEventDispatcher()
 
+  export let searchFromText, searchToText
+
   let fromInput
   let toInput
 
@@ -16,6 +18,9 @@
 
   let fromOption = null
   let toOption = null
+
+  $: fromInput && timeout === 0 ? fromInput.value = searchFromText || '' : null
+  $: toInput && timeout === 0 ? toInput.value = searchToText || '' : null
 
   let timeout = 0
   let currentString = ''

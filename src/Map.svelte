@@ -97,8 +97,6 @@
         })
 
         oldBounds = bounds
-
-        console.log(mapBounds)
       }
     }
 
