@@ -245,6 +245,12 @@
     </div>
   </div>
   <div class="results">
+    {#if itineraries.length > 0}
+    <div class="sort-wrapper">
+      <img src="/south_white_18dp.svg">
+      <span>Sorted by emissions</span>
+    </div>
+    {/if}
     {#if loading}
       <Loader />
     {/if}
@@ -304,6 +310,7 @@
 
   .search-wrapper {
     background: #f4f4f4;
+    padding-bottom: 1rem;
   }
 
   .results {
@@ -360,6 +367,24 @@
     margin: 0;
     flex: 1;
   }
+
+  .sort-wrapper {
+    display: flex;
+    padding: 0.375rem 0.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+    font-size: 0.825rem;
+    background: #24262f;
+    color: #fff;
+    align-items: center;
+  }
+  .sort-wrapper span {
+    flex: 1;
+  }
+  .sort-wrapper img {
+    margin-right: 3px;
+  }
+
 
   ul {
     margin: 0;
