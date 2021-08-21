@@ -100,15 +100,15 @@
       }
     }
 
-      // remove all old layers
-      const currentItineraries = itineraries.map(i => i.total.description)
-      Object.keys(loadedLayers).forEach((i) => {
-        if (!currentItineraries.includes(i)){
-          map.removeLayer(i)
+    // remove all old layers
+    const currentItineraries = itineraries.map((i) => i.total.description)
+    Object.keys(loadedLayers).forEach((i) => {
+      if (!currentItineraries.includes(i)) {
+        map.removeLayer(i)
         map.removeSource(i)
-        delete loadedLayers[i]  
-        }
-      })
+        delete loadedLayers[i]
+      }
+    })
 
     itineraries.forEach((i) => {
       const id = i.total.description

@@ -40,7 +40,11 @@
 <li style="--itinerary-color: {color[0]}; --itinerary-text-color: {color[1]}">
   <div class="description">
     <div class="route-info-wrapper">
-      <img alt="" role="presentation" src={getIcon(itinerary.total.description)} />
+      <img
+        alt=""
+        role="presentation"
+        src={getIcon(itinerary.total.description)}
+      />
       <div class="route-info">
         <h2>{itinerary.total.description.split(' (')[0]}</h2>
         {#if subtitle !== ''}

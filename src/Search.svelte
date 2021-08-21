@@ -19,11 +19,14 @@
   let fromOption = null
   let toOption = null
 
-  $: fromOption === null && timeout === 0 ? fromOption = searchFromText : null
-  $: toOption === null && timeout === 0 ? toOption = searchToText : null
-  $: fromInput && timeout === 0 ? fromInput.value = (searchFromText || {}).address || '' : null
-  $: toInput && timeout === 0 ? toInput.value = (searchToText || {}).address || '' : null
-  
+  $: fromOption === null && timeout === 0 ? (fromOption = searchFromText) : null
+  $: toOption === null && timeout === 0 ? (toOption = searchToText) : null
+  $: fromInput && timeout === 0
+    ? (fromInput.value = (searchFromText || {}).address || '')
+    : null
+  $: toInput && timeout === 0
+    ? (toInput.value = (searchToText || {}).address || '')
+    : null
 
   let timeout = 0
   let currentString = ''
