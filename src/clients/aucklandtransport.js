@@ -258,9 +258,13 @@ export const processRoadPlan = (roadPlan, mode, options) => {
   }
   const distanceKilometers = calculateDistance(coordinates)
   let timeMinutes = roadPlan.response.itineraries[0].DurationMinutes
-  if (mode === 'ebike') {
-    // assume that ebike is quite a bit faster than riding a regular bike (25km/h ish)
-    timeMinutes = Math.round(timeMinutes * 0.65)
+
+  // base walk is 5km/h and bike is 15km/h
+  const speed = options.speed
+  if (mode === 'walk') {
+    timeMinutes = Math.round((timeMinutes * 5) / speed)
+  } else if (mode === 'bike' || mode === 'ebike') {
+    timeMinutes = Math.round((timeMinutes * 15) / speed)
   } else if (mode === 'drive') {
     if (options.travelTime === 'peak') {
       timeMinutes = Math.round(timeMinutes * 1.5)

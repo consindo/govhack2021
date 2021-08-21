@@ -49,6 +49,15 @@
   }
   $: loadPt(mapBounds, travelTime)
 
+  let walkSpeed = 5
+  let walkSpeeds = [5,7,9]
+
+  let bikeSpeed = 15
+  let bikeSpeeds = [15,22,28]
+
+  let ebikeSpeed = 22
+  let ebikeSpeeds = [22,28,33]
+
   let busPower = 'Diesel'
   let busPowers = ['Diesel', 'Electric']
 
@@ -95,14 +104,17 @@
     }),
     processRoadPlan(cycleData, 'Bike', {
       travelTime,
+      speed: bikeSpeed,
       emissionOptions: ['Bike', 'Pedal'],
     }),
     processRoadPlan(cycleData, 'eBike', {
       travelTime,
+      speed: ebikeSpeed,
       emissionOptions: ['Bike', 'eBike'],
     }),
     processRoadPlan(walkData, 'Walk', {
       travelTime,
+      speed: walkSpeed,
       emissionOptions: ['Foot'],
     }),
     processRoadPlan(driveData, 'Drive', {
@@ -126,6 +138,8 @@
     })
 
   const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)
+
+  const speedify = (speed, index) => `${['Normal', 'Quick', 'Fast'][index]} (${speed}km/h)`
 </script>
 
 <main>
@@ -145,6 +159,47 @@
           {capitalize(time)}
         </label>
       {/each}
+
+      <h3>Walking &amp; Cycling</h3>
+      <h4>Walking Speed</h4>
+      {#each walkSpeeds as speed, i}
+        <label>
+          <input
+            type="radio"
+            bind:group={walkSpeed}
+            name="walkSpeed"
+            value={speed}
+          />
+          {speedify(speed, i)}
+        </label>
+      {/each}
+
+      <h4>Biking Speed</h4>
+      {#each bikeSpeeds as speed, i}
+        <label>
+          <input
+            type="radio"
+            bind:group={bikeSpeed}
+            name="bikeSpeed"
+            value={speed}
+          />
+          {speedify(speed, i)}
+        </label>
+      {/each}
+
+      <h4>eBike Speed</h4>
+      {#each ebikeSpeeds as speed, i}
+        <label>
+          <input
+            type="radio"
+            bind:group={ebikeSpeed}
+            name="ebikeSpeed"
+            value={speed}
+          />
+          {speedify(speed, i)}
+        </label>
+      {/each}
+
 
       <h3>Public Transport</h3>
       <h4>Buses</h4>
