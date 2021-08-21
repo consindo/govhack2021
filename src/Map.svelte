@@ -16,6 +16,13 @@
       style: 'mapbox://styles/mapbox/light-v10',
       center: [174.769286, -36.843537],
     })
+
+    map.on('load', () => {
+      map.loadImage('/location-marker.png', (error, image) => {
+        if (error) return console.warn('could not load marker')
+        map.addImage('location-marker', image)
+      })
+    })
   })
 
   let oldBounds = [
@@ -30,9 +37,68 @@
         [mapBounds.from.lon, mapBounds.from.lat],
         [mapBounds.to.lon, mapBounds.to.lat],
       ]
-      if (JSON.stringify(bounds) !== oldBounds) {
+      if (JSON.stringify(bounds) !== JSON.stringify(oldBounds)) {
         map.fitBounds(bounds, { padding: 100 })
+
+        if (oldBounds[0][0] !== 0) {
+          map.removeLayer('to-from')
+          map.removeSource('to-from')
+        }
+
+        map.addSource('to-from', {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features: [
+              {
+                type: 'Feature',
+                geometry: {
+                  type: 'Point',
+                  coordinates: [mapBounds.from.lon, mapBounds.from.lat],
+                },
+                properties: {
+                  title: mapBounds.from.address.split(',')[0],
+                },
+              },
+              {
+                type: 'Feature',
+                geometry: {
+                  type: 'Point',
+                  coordinates: [mapBounds.to.lon, mapBounds.to.lat],
+                },
+                properties: {
+                  title: mapBounds.to.address.split(',')[0],
+                },
+              },
+            ],
+          },
+        })
+
+        map.addLayer({
+          id: 'to-from',
+          type: 'symbol',
+          source: 'to-from',
+          layout: {
+            'icon-image': 'location-marker',
+            'icon-size': 0.5,
+            'icon-offset': [0, -10],
+            'text-offset': [0, -7],
+            // get the title name from the source's "title" property
+            'text-field': ['get', 'title'],
+            'text-offset': [0, 1.25],
+            'text-anchor': 'top',
+            'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+            'text-size': 13,
+          },
+          paint: {
+            'text-halo-color': 'rgba(255,255,255,0.85)',
+            'text-halo-width': 2,
+          },
+        })
+
         oldBounds = bounds
+
+        console.log(mapBounds)
       }
     }
 
@@ -60,19 +126,22 @@
         data: i.total.route,
       })
 
-      map.addLayer({
-        id,
-        type: 'line',
-        source: id,
-        layout: {
-          'line-join': 'round',
-          'line-cap': 'round',
+      map.addLayer(
+        {
+          id,
+          type: 'line',
+          source: id,
+          layout: {
+            'line-join': 'round',
+            'line-cap': 'round',
+          },
+          paint: {
+            'line-color': getColor(id, i.total.index)[0],
+            'line-width': 5,
+          },
         },
-        paint: {
-          'line-color': getColor(id, i.total.index)[0],
-          'line-width': 5,
-        },
-      })
+        'to-from'
+      )
     })
   })
 </script>

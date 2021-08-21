@@ -2,7 +2,8 @@
   import { getColor } from './clients/color.js'
   export let itinerary
 
-  const round = (num, factor = 100) => Math.round((num + Number.EPSILON) * factor) / factor
+  const round = (num, factor = 100) =>
+    Math.round((num + Number.EPSILON) * factor) / factor
 
   const timeConvert = (mins) => {
     if (mins < 60) {
@@ -18,7 +19,9 @@
     ')',
     ''
   )
-  $: trees = round(itinerary.total.carbonEmissions / 6, 10) || round(itinerary.total.carbonEmissions / 6, 100)
+  $: trees =
+    round(itinerary.total.carbonEmissions / 6, 10) ||
+    round(itinerary.total.carbonEmissions / 6, 100)
 </script>
 
 <li style="--itinerary-color: {color[0]}; --itinerary-text-color: {color[1]}">
@@ -31,8 +34,9 @@
     </div>
     <p>
       <strong>{timeConvert(itinerary.total.timeMinutes)}</strong> &middot; {round(
-        itinerary.total.distanceKilometers
-      , 10)}<small>km</small>
+        itinerary.total.distanceKilometers,
+        10
+      )}<small>km</small>
     </p>
   </div>
   <div class="emissions">
@@ -50,7 +54,7 @@
             points="13,10 15,10 9.97,3 5,10 7,10 4,14 9,14 9,17 11.03,17 11.03,14 16,14"
           /></g
         ></svg
-      ><span>{trees} {trees === 1 ? 'tree': 'trees'}</span>
+      ><span>{trees} {trees === 1 ? 'tree' : 'trees'}</span>
     </h5>
   </div>
 </li>
