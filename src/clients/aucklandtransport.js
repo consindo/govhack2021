@@ -13,12 +13,12 @@ const paramsToQuery = (params) =>
 const requestCache = {}
 
 export const plan = async (search, options) => {
+  // urgh this logic to get a date is probably wrong, but who cares
   let date = new Date()
   if (date.getDay() > 5) {
     date.setDate(date.getDate() + 7 - date.getDay() + 1)
   }
   const dateString = date.toISOString().split('T')[0]
-  console.log(dateString)
 
   let time = '12:00'
   if (options.travelTime === 'peak') {

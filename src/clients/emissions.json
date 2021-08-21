@@ -6,151 +6,182 @@
           "co2_per_km": 209.47,
           "litres_per_100km": 8.041
         },
-        "2 passengers": {
+        "2 passenger": {
           "co2_per_km": 104.735,
           "litres_per_100km": 4.021
         },
-        "3 passengers": {
+        "3 passenger": {
           "co2_per_km": 69.823,
           "litres_per_100km": 2.68
         },
-        "4 passengers": {
+        "4 passenger": {
           "co2_per_km": 52.367,
           "litres_per_100km": 2.01
         },
-        "5 passengers": {
+        "5 passenger": {
           "co2_per_km": 41.894,
           "litres_per_100km": 1.608
         }
       },
       "electric": {
-        "1 passenger": {
-          "EV home charge off peak": {
+        "EV home charge off peak": {
+          "1 passenger": {
             "co2_per_km": 76.912,
-            "litres_per_100km": 26.231
+            "kWh_per_100km": 26.231
           },
-          "EV home charge average rate": {
+          "2 passenger": {
+            "co2_per_km": 38.456,
+            "kWh_per_100km": 13.116
+          },
+          "3 passenger": {
+            "co2_per_km": 25.637,
+            "kWh_per_100km": 8.744
+          },
+          "4 passenger": {
+            "co2_per_km": 19.228,
+            "kWh_per_100km": 6.558
+          },
+          "5 passenger": {
+            "co2_per_km": 15.382,
+            "kWh_per_100km": 5.246
+          }
+        },
+        "EV home charge average rate": {
+          "1 passenger": {
             "co2_per_km": 76.912,
-            "litres_per_100km": 26.231
+            "kWh_per_100km": 26.231
           },
-          "EV public charge": {
+          "2 passenger": {
+            "co2_per_km": 38.456,
+            "kWh_per_100km": 13.116
+          },
+          "3 passenger": {
+            "co2_per_km": 25.637,
+            "kWh_per_100km": 8.744
+          },
+          "4 passenger": {
+            "co2_per_km": 19.228,
+            "kWh_per_100km": 6.558
+          },
+          "5 passenger": {
+            "co2_per_km": 15.382,
+            "kWh_per_100km": 5.246
+          }
+        },
+        "EV public charge": {
+          "1 passenger": {
             "co2_per_km": 66.88,
-            "litres_per_100km": 22.81
-          }
-        },
-        "2 passengers": {
-          "EV home charge off peak": {
-            "co2_per_km": 38.456,
-            "litres_per_100km": 26.231
+            "kWh_per_100km": 22.81
           },
-          "EV home charge average rate": {
-            "co2_per_km": 38.456,
-            "litres_per_100km": 26.231
-          },
-          "EV public charge": {
+          "2 passenger": {
             "co2_per_km": 33.44,
-            "litres_per_100km": 22.81
-          }
-        },
-        "3 passengers": {
-          "EV home charge off peak": {
-            "co2_per_km": 25.637,
-            "litres_per_100km": 26.231
+            "kWh_per_100km": 11.405
           },
-          "EV home charge average rate": {
-            "co2_per_km": 25.637,
-            "litres_per_100km": 26.231
-          },
-          "EV public charge": {
+          "3 passenger": {
             "co2_per_km": 22.293,
-            "litres_per_100km": 22.81
-          }
-        },
-        "4 passengers": {
-          "EV home charge off peak": {
-            "co2_per_km": 19.228,
-            "litres_per_100km": 26.231
+            "kWh_per_100km": 7.603
           },
-          "EV home charge average rate": {
-            "co2_per_km": 19.228,
-            "litres_per_100km": 26.231
-          },
-          "EV public charge": {
+          "4 passenger": {
             "co2_per_km": 16.72,
-            "litres_per_100km": 22.81
-          }
-        },
-        "5 passengers": {
-          "EV home charge off peak": {
-            "co2_per_km": 15.382,
-            "litres_per_100km": 26.231
+            "kWh_per_100km": 5.702
           },
-          "EV home charge average rate": {
-            "co2_per_km": 15.382,
-            "litres_per_100km": 26.231
-          },
-          "EV public charge": {
+          "5 passenger": {
             "co2_per_km": 13.376,
-            "litres_per_100km": 22.81
+            "kWh_per_100km": 4.562
           }
         }
       },
       "hybrid": {
-        "1 passenger": 131.77,
-        "2 passengers": 65.885,
-        "3 passengers": 43.923,
-        "4 passengers": 32.943,
-        "5 passengers": 26.354
+        "1 passenger": {
+          "co2_per_km": 131.77,
+          "litres_per_100km": 5.767
+        },
+        "2 passenger": {
+          "co2_per_km": 65.885,
+          "litres_per_100km": 2.884
+        },
+        "3 passenger": {
+          "co2_per_km": 43.923,
+          "litres_per_100km": 1.922
+        },
+        "4 passenger": {
+          "co2_per_km": 32.943,
+          "litres_per_100km": 1.442
+        },
+        "5 passenger": {
+          "co2_per_km": 26.354,
+          "litres_per_100km": 1.153
+        }
       },
       "regular petrol": {
         "1 passenger": {
-          "co2_per_km": 282.95,
-          "litres_per_100km": 12.385
+          "co2_per_km": 263.144,
+          "litres_per_100km": 11.518
         },
-        "2 passengers": {
-          "co2_per_km": 141.475,
-          "litres_per_100km": 6.192
+        "2 passenger": {
+          "co2_per_km": 131.572,
+          "litres_per_100km": 5.759
         },
-        "3 passengers": {
-          "co2_per_km": 94.317,
-          "litres_per_100km": 4.128
+        "3 passenger": {
+          "co2_per_km": 87.715,
+          "litres_per_100km": 3.839
         },
-        "4 passengers": {
-          "co2_per_km": 70.737,
-          "litres_per_100km": 3.096
+        "4 passenger": {
+          "co2_per_km": 65.786,
+          "litres_per_100km": 2.88
         },
-        "5 passengers": {
-          "co2_per_km": 56.59,
-          "litres_per_100km": 2.477
+        "5 passenger": {
+          "co2_per_km": 52.629,
+          "litres_per_100km": 2.304
         }
       },
       "plug-in hybrid electric": {
-        "1 passenger": 77.31,
-        "2 passengers": 38.655,
-        "3 passengers": 25.77,
-        "4 passengers": 19.328,
-        "5 passengers": 15.462
+        "1 passenger": {
+          "co2_per_km": 114.63,
+          "litres_per_100km": 3.4,
+          "kWh_per_100km": 15.3
+        },
+        "2 passenger": {
+          "co2_per_km": 57.315,
+          "litres_per_100km": 1.7,
+          "kWh_per_100km": 7.65
+        },
+        "3 passenger": {
+          "co2_per_km": 38.21,
+          "litres_per_100km": 1.133,
+          "kWh_per_100km": 5.1
+        },
+        "4 passenger": {
+          "co2_per_km": 28.657,
+          "litres_per_100km": 0.85,
+          "kWh_per_100km": 3.825
+        },
+        "5 passenger": {
+          "co2_per_km": 22.926,
+          "litres_per_100km": 0.68,
+          "kWh_per_100km": 3.06
+        }
       },
       "premium petrol": {
         "1 passenger": {
-          "co2_per_km": 263.144,
-          "litres_per_100km": 11.239
+          "co2_per_km": 282.95,
+          "litres_per_100km": 12.085
         },
-        "2 passengers": {
-          "co2_per_km": 131.572,
-          "litres_per_100km": 5.619
+        "2 passenger": {
+          "co2_per_km": 141.475,
+          "litres_per_100km": 6.043
         },
-        "3 passengers": {
-          "co2_per_km": 87.715,
-          "litres_per_100km": 3.746
+        "3 passenger": {
+          "co2_per_km": 94.317,
+          "litres_per_100km": 4.028
         },
-        "4 passengers": {
-          "co2_per_km": 65.785,
-          "litres_per_100km": 2.81
+        "4 passenger": {
+          "co2_per_km": 70.737,
+          "litres_per_100km": 3.021
         },
-        "5 passengers": {
-          "co2_per_km": 52.629,
-          "litres_per_100km": 2.248
+        "5 passenger": {
+          "co2_per_km": 56.59,
+          "litres_per_100km": 2.417
         }
       }
     },
@@ -160,151 +191,182 @@
           "co2_per_km": 170.61,
           "litres_per_100km": 6.549
         },
-        "2 passengers": {
+        "2 passenger": {
           "co2_per_km": 85.305,
           "litres_per_100km": 3.275
         },
-        "3 passengers": {
+        "3 passenger": {
           "co2_per_km": 56.87,
           "litres_per_100km": 2.183
         },
-        "4 passengers": {
+        "4 passenger": {
           "co2_per_km": 42.653,
           "litres_per_100km": 1.637
         },
-        "5 passengers": {
+        "5 passenger": {
           "co2_per_km": 34.122,
           "litres_per_100km": 1.31
         }
       },
       "electric": {
-        "1 passenger": {
-          "EV home charge off peak": {
+        "EV home charge off peak": {
+          "1 passenger": {
             "co2_per_km": 61.145,
-            "litres_per_100km": 26.231
+            "kWh_per_100km": 26.231
           },
-          "EV home charge average rate": {
+          "2 passenger": {
+            "co2_per_km": 30.573,
+            "kWh_per_100km": 13.116
+          },
+          "3 passenger": {
+            "co2_per_km": 20.382,
+            "kWh_per_100km": 8.744
+          },
+          "4 passenger": {
+            "co2_per_km": 15.286,
+            "kWh_per_100km": 6.558
+          },
+          "5 passenger": {
+            "co2_per_km": 12.229,
+            "kWh_per_100km": 5.246
+          }
+        },
+        "EV home charge average rate": {
+          "1 passenger": {
             "co2_per_km": 61.145,
-            "litres_per_100km": 26.231
+            "kWh_per_100km": 26.231
           },
-          "EV public charge": {
+          "2 passenger": {
+            "co2_per_km": 30.573,
+            "kWh_per_100km": 13.116
+          },
+          "3 passenger": {
+            "co2_per_km": 20.382,
+            "kWh_per_100km": 8.744
+          },
+          "4 passenger": {
+            "co2_per_km": 15.286,
+            "kWh_per_100km": 6.558
+          },
+          "5 passenger": {
+            "co2_per_km": 12.229,
+            "kWh_per_100km": 5.246
+          }
+        },
+        "EV public charge": {
+          "1 passenger": {
             "co2_per_km": 53.17,
-            "litres_per_100km": 22.81
-          }
-        },
-        "2 passengers": {
-          "EV home charge off peak": {
-            "co2_per_km": 30.573,
-            "litres_per_100km": 26.231
+            "kWh_per_100km": 22.81
           },
-          "EV home charge average rate": {
-            "co2_per_km": 30.573,
-            "litres_per_100km": 26.231
-          },
-          "EV public charge": {
+          "2 passenger": {
             "co2_per_km": 26.585,
-            "litres_per_100km": 22.81
-          }
-        },
-        "3 passengers": {
-          "EV home charge off peak": {
-            "co2_per_km": 20.381,
-            "litres_per_100km": 26.231
+            "kWh_per_100km": 11.405
           },
-          "EV home charge average rate": {
-            "co2_per_km": 20.381,
-            "litres_per_100km": 26.231
-          },
-          "EV public charge": {
+          "3 passenger": {
             "co2_per_km": 17.723,
-            "litres_per_100km": 22.81
-          }
-        },
-        "4 passengers": {
-          "EV home charge off peak": {
-            "co2_per_km": 15.287,
-            "litres_per_100km": 26.231
+            "kWh_per_100km": 7.603
           },
-          "EV home charge average rate": {
-            "co2_per_km": 15.287,
-            "litres_per_100km": 26.231
-          },
-          "EV public charge": {
+          "4 passenger": {
             "co2_per_km": 13.293,
-            "litres_per_100km": 22.81
-          }
-        },
-        "5 passengers": {
-          "EV home charge off peak": {
-            "co2_per_km": 12.229,
-            "litres_per_100km": 26.231
+            "kWh_per_100km": 5.702
           },
-          "EV home charge average rate": {
-            "co2_per_km": 12.229,
-            "litres_per_100km": 26.231
-          },
-          "EV public charge": {
+          "5 passenger": {
             "co2_per_km": 10.634,
-            "litres_per_100km": 22.81
+            "kWh_per_100km": 4.562
           }
         }
       },
       "hybrid": {
-        "1 passenger": 108.95,
-        "2 passengers": 54.475,
-        "3 passengers": 36.317,
-        "4 passengers": 27.238,
-        "5 passengers": 21.79
+        "1 passenger": {
+          "co2_per_km": 108.95,
+          "litres_per_100km": 4.769
+        },
+        "2 passenger": {
+          "co2_per_km": 54.475,
+          "litres_per_100km": 2.385
+        },
+        "3 passenger": {
+          "co2_per_km": 36.317,
+          "litres_per_100km": 1.59
+        },
+        "4 passenger": {
+          "co2_per_km": 27.238,
+          "litres_per_100km": 1.192
+        },
+        "5 passenger": {
+          "co2_per_km": 21.79,
+          "litres_per_100km": 0.954
+        }
       },
       "regular petrol": {
         "1 passenger": {
-          "co2_per_km": 192.28,
-          "litres_per_100km": 8.416
+          "co2_per_km": 178.82,
+          "litres_per_100km": 7.827
         },
-        "2 passengers": {
-          "co2_per_km": 96.14,
-          "litres_per_100km": 4.208
+        "2 passenger": {
+          "co2_per_km": 89.41,
+          "litres_per_100km": 3.913
         },
-        "3 passengers": {
-          "co2_per_km": 64.093,
-          "litres_per_100km": 2.805
+        "3 passenger": {
+          "co2_per_km": 59.607,
+          "litres_per_100km": 2.609
         },
-        "4 passengers": {
-          "co2_per_km": 48.07,
-          "litres_per_100km": 2.104
+        "4 passenger": {
+          "co2_per_km": 44.705,
+          "litres_per_100km": 1.957
         },
-        "5 passengers": {
-          "co2_per_km": 38.456,
-          "litres_per_100km": 1.683
+        "5 passenger": {
+          "co2_per_km": 35.764,
+          "litres_per_100km": 1.565
         }
       },
       "plug-in hybrid electric": {
-        "1 passenger": 70.83,
-        "2 passengers": 35.415,
-        "3 passengers": 23.61,
-        "4 passengers": 17.707,
-        "5 passengers": 14.166
+        "1 passenger": {
+          "co2_per_km": 72.76,
+          "litres_per_100km": 1.8,
+          "kWh_per_100km": 13.1
+        },
+        "2 passenger": {
+          "co2_per_km": 36.38,
+          "litres_per_100km": 0.9,
+          "kWh_per_100km": 6.55
+        },
+        "3 passenger": {
+          "co2_per_km": 24.253,
+          "litres_per_100km": 0.6,
+          "kWh_per_100km": 4.367
+        },
+        "4 passenger": {
+          "co2_per_km": 18.19,
+          "litres_per_100km": 0.45,
+          "kWh_per_100km": 3.275
+        },
+        "5 passenger": {
+          "co2_per_km": 14.552,
+          "litres_per_100km": 0.36,
+          "kWh_per_100km": 2.62
+        }
       },
       "premium petrol": {
         "1 passenger": {
-          "co2_per_km": 178.82,
-          "litres_per_100km": 7.637
+          "co2_per_km": 192.28,
+          "litres_per_100km": 8.212
         },
-        "2 passengers": {
-          "co2_per_km": 89.41,
-          "litres_per_100km": 3.819
+        "2 passenger": {
+          "co2_per_km": 96.14,
+          "litres_per_100km": 4.106
         },
-        "3 passengers": {
-          "co2_per_km": 59.606,
-          "litres_per_100km": 2.546
+        "3 passenger": {
+          "co2_per_km": 64.093,
+          "litres_per_100km": 2.737
         },
-        "4 passengers": {
-          "co2_per_km": 44.705,
-          "litres_per_100km": 1.909
+        "4 passenger": {
+          "co2_per_km": 48.07,
+          "litres_per_100km": 2.053
         },
-        "5 passengers": {
-          "co2_per_km": 35.764,
-          "litres_per_100km": 1.527
+        "5 passenger": {
+          "co2_per_km": 38.456,
+          "litres_per_100km": 1.642
         }
       }
     },
@@ -314,159 +376,199 @@
           "co2_per_km": 142.08,
           "litres_per_100km": 5.454
         },
-        "2 passengers": {
+        "2 passenger": {
           "co2_per_km": 71.04,
           "litres_per_100km": 2.727
         },
-        "3 passengers": {
+        "3 passenger": {
           "co2_per_km": 47.36,
           "litres_per_100km": 1.818
         },
-        "4 passengers": {
+        "4 passenger": {
           "co2_per_km": 35.52,
-          "litres_per_100km": 1.364
+          "litres_per_100km": 1.363
         },
-        "5 passengers": {
+        "5 passenger": {
           "co2_per_km": 28.416,
           "litres_per_100km": 1.091
         }
       },
       "electric": {
-        "1 passenger": {
-          "EV home charge off peak": {
+        "EV home charge off peak": {
+          "1 passenger": {
             "co2_per_km": 52.52,
-            "litres_per_100km": 26.231
+            "kWh_per_100km": 26.231
           },
-          "EV home charge average rate": {
+          "2 passenger": {
+            "co2_per_km": 26.26,
+            "kWh_per_100km": 13.116
+          },
+          "3 passenger": {
+            "co2_per_km": 17.507,
+            "kWh_per_100km": 8.744
+          },
+          "4 passenger": {
+            "co2_per_km": 13.13,
+            "kWh_per_100km": 6.558
+          },
+          "5 passenger": {
+            "co2_per_km": 10.504,
+            "kWh_per_100km": 5.246
+          }
+        },
+        "EV home charge average rate": {
+          "1 passenger": {
             "co2_per_km": 52.52,
-            "litres_per_100km": 26.231
+            "kWh_per_100km": 26.231
           },
-          "EV public charge": {
+          "2 passenger": {
+            "co2_per_km": 26.26,
+            "kWh_per_100km": 13.116
+          },
+          "3 passenger": {
+            "co2_per_km": 17.507,
+            "kWh_per_100km": 8.744
+          },
+          "4 passenger": {
+            "co2_per_km": 13.13,
+            "kWh_per_100km": 6.558
+          },
+          "5 passenger": {
+            "co2_per_km": 10.504,
+            "kWh_per_100km": 5.246
+          }
+        },
+        "EV public charge": {
+          "1 passenger": {
             "co2_per_km": 45.67,
-            "litres_per_100km": 22.81
-          }
-        },
-        "2 passengers": {
-          "EV home charge off peak": {
-            "co2_per_km": 26.26,
-            "litres_per_100km": 26.231
+            "kWh_per_100km": 22.81
           },
-          "EV home charge average rate": {
-            "co2_per_km": 26.26,
-            "litres_per_100km": 26.231
-          },
-          "EV public charge": {
+          "2 passenger": {
             "co2_per_km": 22.835,
-            "litres_per_100km": 22.81
-          }
-        },
-        "3 passengers": {
-          "EV home charge off peak": {
-            "co2_per_km": 17.506,
-            "litres_per_100km": 26.231
+            "kWh_per_100km": 11.405
           },
-          "EV home charge average rate": {
-            "co2_per_km": 17.506,
-            "litres_per_100km": 26.231
-          },
-          "EV public charge": {
+          "3 passenger": {
             "co2_per_km": 15.223,
-            "litres_per_100km": 22.81
-          }
-        },
-        "4 passengers": {
-          "EV home charge off peak": {
-            "co2_per_km": 13.131,
-            "litres_per_100km": 26.231
+            "kWh_per_100km": 7.603
           },
-          "EV home charge average rate": {
-            "co2_per_km": 13.131,
-            "litres_per_100km": 26.231
-          },
-          "EV public charge": {
+          "4 passenger": {
             "co2_per_km": 11.418,
-            "litres_per_100km": 22.81
-          }
-        },
-        "5 passengers": {
-          "EV home charge off peak": {
-            "co2_per_km": 10.504,
-            "litres_per_100km": 26.231
+            "kWh_per_100km": 5.702
           },
-          "EV home charge average rate": {
-            "co2_per_km": 10.504,
-            "litres_per_100km": 26.231
-          },
-          "EV public charge": {
+          "5 passenger": {
             "co2_per_km": 9.134,
-            "litres_per_100km": 22.81
+            "kWh_per_100km": 4.562
           }
         }
       },
       "hybrid": {
-        "1 passenger": 105.2,
-        "2 passengers": 52.6,
-        "3 passengers": 35.067,
-        "4 passengers": 26.3,
-        "5 passengers": 21.04
+        "1 passenger": {
+          "co2_per_km": 105.2,
+          "litres_per_100km": 4.605
+        },
+        "2 passenger": {
+          "co2_per_km": 52.6,
+          "litres_per_100km": 2.303
+        },
+        "3 passenger": {
+          "co2_per_km": 35.067,
+          "litres_per_100km": 1.535
+        },
+        "4 passenger": {
+          "co2_per_km": 26.3,
+          "litres_per_100km": 1.151
+        },
+        "5 passenger": {
+          "co2_per_km": 21.04,
+          "litres_per_100km": 0.921
+        }
       },
       "regular petrol": {
         "1 passenger": {
-          "co2_per_km": 153.71,
-          "litres_per_100km": 6.728
+          "co2_per_km": 142.95,
+          "litres_per_100km": 6.257
         },
-        "2 passengers": {
-          "co2_per_km": 76.855,
-          "litres_per_100km": 3.364
+        "2 passenger": {
+          "co2_per_km": 71.475,
+          "litres_per_100km": 3.128
         },
-        "3 passengers": {
-          "co2_per_km": 51.237,
-          "litres_per_100km": 2.243
+        "3 passenger": {
+          "co2_per_km": 47.65,
+          "litres_per_100km": 2.086
         },
-        "4 passengers": {
-          "co2_per_km": 38.428,
-          "litres_per_100km": 1.682
+        "4 passenger": {
+          "co2_per_km": 35.737,
+          "litres_per_100km": 1.564
         },
-        "5 passengers": {
-          "co2_per_km": 30.742,
-          "litres_per_100km": 1.346
+        "5 passenger": {
+          "co2_per_km": 28.59,
+          "litres_per_100km": 1.251
         }
       },
       "plug-in hybrid electric": {
-        "1 passenger": 29.35,
-        "2 passengers": 14.675,
-        "3 passengers": 9.783,
-        "4 passengers": 7.338,
-        "5 passengers": 5.87
+        "1 passenger": {
+          "co2_per_km": 53.37,
+          "litres_per_100km": 1.3,
+          "kWh_per_100km": 9.8
+        },
+        "2 passenger": {
+          "co2_per_km": 26.685,
+          "litres_per_100km": 0.65,
+          "kWh_per_100km": 4.9
+        },
+        "3 passenger": {
+          "co2_per_km": 17.79,
+          "litres_per_100km": 0.433,
+          "kWh_per_100km": 3.267
+        },
+        "4 passenger": {
+          "co2_per_km": 13.342,
+          "litres_per_100km": 0.325,
+          "kWh_per_100km": 2.45
+        },
+        "5 passenger": {
+          "co2_per_km": 10.674,
+          "litres_per_100km": 0.26,
+          "kWh_per_100km": 1.96
+        }
       },
       "premium petrol": {
         "1 passenger": {
-          "co2_per_km": 142.95,
-          "litres_per_100km": 6.105
+          "co2_per_km": 153.71,
+          "litres_per_100km": 6.565
         },
-        "2 passengers": {
-          "co2_per_km": 71.475,
-          "litres_per_100km": 3.053
+        "2 passenger": {
+          "co2_per_km": 76.855,
+          "litres_per_100km": 3.283
         },
-        "3 passengers": {
-          "co2_per_km": 47.65,
-          "litres_per_100km": 2.035
+        "3 passenger": {
+          "co2_per_km": 51.237,
+          "litres_per_100km": 2.188
         },
-        "4 passengers": {
-          "co2_per_km": 35.738,
-          "litres_per_100km": 1.526
+        "4 passenger": {
+          "co2_per_km": 38.428,
+          "litres_per_100km": 1.641
         },
-        "5 passengers": {
-          "co2_per_km": 28.59,
-          "litres_per_100km": 1.221
+        "5 passenger": {
+          "co2_per_km": 30.742,
+          "litres_per_100km": 1.313
         }
       }
     }
   },
   "Motorcycle": {
-    "Large": 135.01,
-    "Medium": 102.89,
-    "Small": 84.45
+    "Large": {
+      "co2_per_km": 135.01,
+      "litres_per_100km": 4.44
+    },
+    "Medium": {
+      "co2_per_km": 102.89,
+      "litres_per_100km": 2.35
+    },
+    "Small": {
+      "co2_per_km": 84.45,
+      "litres_per_100km": 1.74
+    }
   },
   "Rail": {
     "Light rail": 35.08,

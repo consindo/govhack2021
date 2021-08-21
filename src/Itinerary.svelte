@@ -14,7 +14,10 @@
   }
 
   $: color = getColor(itinerary.total.description, itinerary.total.index)
-  $: subtitle = (itinerary.total.description.split(' (')[1] || '').replace(')', '')
+  $: subtitle = (itinerary.total.description.split(' (')[1] || '').replace(
+    ')',
+    ''
+  )
 </script>
 
 <li style="--itinerary-color: {color[0]}; --itinerary-text-color: {color[1]}">
@@ -25,7 +28,10 @@
         <h4>{subtitle}</h4>
       {/if}
     </div>
-    <p><strong>{timeConvert(itinerary.total.timeMinutes)}</strong> &middot; {round(itinerary.total.distanceKilometers)}<small>km</small>
+    <p>
+      <strong>{timeConvert(itinerary.total.timeMinutes)}</strong> &middot; {round(
+        itinerary.total.distanceKilometers
+      )}<small>km</small>
     </p>
   </div>
   <h3 class="emissions">
@@ -40,7 +46,7 @@
     padding: 1rem;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid rgba(0, 0, 0, .25);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
   }
   .description {
     flex: 1;
@@ -55,7 +61,7 @@
   h4 {
     font-size: 0.75rem;
     margin: 0;
-    background: rgba(0,0,0,0.075);
+    background: rgba(0, 0, 0, 0.075);
     display: inline-block;
     padding: 1px 3px;
     border-radius: 3px;
@@ -70,6 +76,6 @@
   }
   p {
     margin: 0;
-    font-size: .9rem;
+    font-size: 0.9rem;
   }
 </style>

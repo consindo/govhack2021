@@ -20,7 +20,7 @@
 
   const handleSearch = async (event) => {
     loading = true
-    
+
     cycleData = null
     walkData = null
     driveData = null
@@ -43,13 +43,13 @@
     if (Object.keys(mapBounds).length > 0) {
       ptData = null
       loading = true
-      await plan(mapBounds, { travelTime }).then((data) => (ptData = data))  
+      await plan(mapBounds, { travelTime }).then((data) => (ptData = data))
       loading = false
     }
   }
   $: loadPt(mapBounds, travelTime)
 
-  let carSize = 'Small'
+  let carSize = 'Medium'
   let carSizes = ['Small', 'Medium', 'Large']
 
   let carType = 'regular petrol'
@@ -62,18 +62,46 @@
     'electric',
   ]
 
+  let evPower = 'EV home charge average rate'
+  let evPowers = [
+    'EV home charge off peak',
+    'EV home charge average rate',
+    'EV public charge',
+  ]
+
+  let carPassenger = '1 passenger'
+  let carPassengers = [
+    '1 passenger',
+    '2 passenger',
+    '3 passenger',
+    '4 passenger',
+    '5 passenger',
+  ]
+
   $: itineraries = [
     processPlan(ptData),
-    processRoadPlan(cycleData, 'Bike', { travelTime, emissionOptions: ['Bike', 'Pedal']}),
-    processRoadPlan(cycleData, 'eBike', { travelTime, emissionOptions: ['Bike', 'eBike']}),
-    processRoadPlan(walkData, 'Walk', { travelTime, emissionOptions: ['Foot']}),
-    processRoadPlan(driveData, 'Drive', { travelTime, emissionOptions: [
-      'Car',
-      carSize,
-      carType,
-      '1 passenger',
-      'co2_per_km',
-    ]}),
+    processRoadPlan(cycleData, 'Bike', {
+      travelTime,
+      emissionOptions: ['Bike', 'Pedal'],
+    }),
+    processRoadPlan(cycleData, 'eBike', {
+      travelTime,
+      emissionOptions: ['Bike', 'eBike'],
+    }),
+    processRoadPlan(walkData, 'Walk', {
+      travelTime,
+      emissionOptions: ['Foot'],
+    }),
+    processRoadPlan(driveData, 'Drive', {
+      travelTime,
+      emissionOptions: [
+        'Car',
+        carSize,
+        carType,
+        carType === 'electric' ? [evPower, carPassenger] : carPassenger,
+        'co2_per_km',
+      ].flat(),
+    }),
   ]
     .filter((i) => i !== null)
     .map((i) => {
@@ -83,6 +111,8 @@
     .sort((a, b) => {
       return a.total.carbonEmissions - b.total.carbonEmissions
     })
+
+  const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)
 </script>
 
 <main>
@@ -92,30 +122,30 @@
     <div>
       <h4>Travel Time</h4>
       {#each travelTimes as time}
-          <label>
-            <input
-              type="radio"
-              bind:group={travelTime}
-              name="travelTime"
-              value={time}
-            />
-            {time.charAt(0).toUpperCase() + time.slice(1)}
-          </label>
-        {/each}
+        <label>
+          <input
+            type="radio"
+            bind:group={travelTime}
+            name="travelTime"
+            value={time}
+          />
+          {capitalize(time)}
+        </label>
+      {/each}
 
       <h3>Car</h3>
       <h4>Size</h4>
-        {#each carSizes as size}
-          <label>
-            <input
-              type="radio"
-              bind:group={carSize}
-              name="carSize"
-              value={size}
-            />
-            {size.charAt(0).toUpperCase() + size.slice(1)}
-          </label>
-        {/each}
+      {#each carSizes as size}
+        <label>
+          <input
+            type="radio"
+            bind:group={carSize}
+            name="carSize"
+            value={size}
+          />
+          {capitalize(size)}
+        </label>
+      {/each}
 
       <h4>Type</h4>
       {#each carTypes as type}
@@ -126,7 +156,35 @@
             name="carType"
             value={type}
           />
-          {type.charAt(0).toUpperCase() + type.slice(1)}
+          {capitalize(type)}
+        </label>
+      {/each}
+
+      {#if carType === 'electric'}
+        <h4>Charge Type</h4>
+        {#each evPowers as power}
+          <label>
+            <input
+              type="radio"
+              bind:group={evPower}
+              name="evPower"
+              value={power}
+            />
+            {capitalize(power.replace('EV ', ''))}
+          </label>
+        {/each}
+      {/if}
+
+      <h4>Passengers</h4>
+      {#each carPassengers as passenger}
+        <label>
+          <input
+            type="radio"
+            bind:group={carPassenger}
+            name="carPassenger"
+            value={passenger}
+          />
+          {passenger}
         </label>
       {/each}
     </div>
@@ -157,7 +215,7 @@
     width: 300px;
     box-sizing: border-box;
     padding: 1rem;
-    box-shadow: 1px 0 0 rgba(0,0,0,0.2);
+    box-shadow: 1px 0 0 rgba(0, 0, 0, 0.2);
     overflow-y: auto;
     z-index: 2;
   }
@@ -165,7 +223,7 @@
   .results {
     width: 350px;
     box-sizing: border-box;
-    box-shadow: 1px 0 0 rgba(0,0,0,0.2);
+    box-shadow: 1px 0 0 rgba(0, 0, 0, 0.2);
     background: #f4f4f4;
     overflow-y: auto;
     z-index: 1;
