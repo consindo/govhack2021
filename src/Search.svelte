@@ -99,16 +99,16 @@
       placeholder="Choose starting point"
     />
     {#if fromResults.length > 0 || fromLoading}
-    <div class="results">
-      {#if fromLoading}
-        <Loader />
-      {/if}
-      <ul>
-        {#each fromResults as result, i}
-          <li on:click={select('from', i)}>{result.address}</li>
-        {/each}
-      </ul>
-    </div>
+      <div class="results">
+        {#if fromLoading}
+          <Loader />
+        {/if}
+        <ul>
+          {#each fromResults as result, i}
+            <li on:click={select('from', i)}>{result.address}</li>
+          {/each}
+        </ul>
+      </div>
     {/if}
   </div>
   <div class="container">
@@ -120,20 +120,20 @@
       placeholder="Choose destination"
     />
     {#if toResults.length > 0 || toLoading}
-    <div class="results">
-      {#if toLoading}
-        <Loader />
-      {/if}
-      <ul>
-        {#each toResults as result, i}
-          <li on:click={select('to', i)}>{result.address}</li>
-        {/each}
-      </ul>
-    </div>
+      <div class="results">
+        {#if toLoading}
+          <Loader />
+        {/if}
+        <ul>
+          {#each toResults as result, i}
+            <li on:click={select('to', i)}>{result.address}</li>
+          {/each}
+        </ul>
+      </div>
     {/if}
   </div>
   <div class="container">
-    <button on:click={confirmOptions}>Show my options</button>
+    <button on:click={confirmOptions}>Plan my journey</button>
   </div>
 </div>
 
@@ -164,7 +164,8 @@
     background: #f4f4f4;
     color: #222;
     width: 100%;
-    box-shadow:0 0 0 1px rgba(0,0,0,0.15) inset, 0 1px 10px rgba(0,0,0,0.15);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15) inset,
+      0 1px 10px rgba(0, 0, 0, 0.15);
     font-size: 0.875rem;
     border-radius: 5px;
     overflow: hidden;

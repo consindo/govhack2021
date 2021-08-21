@@ -12,7 +12,6 @@
   import RadioGroup from './RadioGroup.svelte'
   import RadioButton from './RadioButton.svelte'
 
-
   $: mapBounds = {}
   let loading = false
 
@@ -53,13 +52,13 @@
   $: loadPt(mapBounds, travelTime)
 
   let walkSpeed = 5
-  let walkSpeeds = [5,7,9]
+  let walkSpeeds = [5, 7, 9]
 
   let bikeSpeed = 15
-  let bikeSpeeds = [15,22,28]
+  let bikeSpeeds = [15, 22, 28]
 
   let ebikeSpeed = 22
-  let ebikeSpeeds = [22,28,33]
+  let ebikeSpeeds = [22, 28, 33]
 
   let busPower = 'Diesel'
   let busPowers = ['Diesel', 'Electric']
@@ -96,6 +95,10 @@
     '5 passenger',
   ]
 
+  let activeVisible = false
+  let ptVisible = false
+  let carVisible = false
+
   $: itineraries = [
     processPlan(ptData, {
       emissionOptions: {
@@ -103,7 +106,7 @@
         bus: ['Bus', busPower],
         train: ['Rail', trainPower],
         ferry: ['Ferry', 'Passenger ferry'],
-      }
+      },
     }),
     processRoadPlan(cycleData, 'Bike', {
       travelTime,
@@ -142,54 +145,103 @@
 
   const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)
 
-  const speedify = (speed, index) => `${['Normal', 'Quick', 'Fast'][index]} (${speed}km/h)`
+  const speedify = (speed, index) =>
+    `${['Normal', 'Quick', 'Fast'][index]} (${speed}km/h)`
 </script>
 
 <main>
   <div class="query">
-    <h2>Search</h2>
-    <Search on:search={handleSearch} />
+    <div class="brand">
+      <img src="/icon.png" alt="logo" />
+      <h1>Net Zero Waka</h1>
+    </div>
+    <div class="section-wrapper search-wrapper">
+      <h2>Plan a journey</h2>
+      <Search on:search={handleSearch} />
+    </div>
     <div>
-      <h4>Travel Time</h4>
-      <RadioGroup collection={travelTimes} bind:group={travelTime} />
-
-      <h3>Walking &amp; Cycling</h3>
-      <h4>Walking Speed</h4>
-      <RadioButton collection={walkSpeeds} bind:group={walkSpeed} />
-
-      <h4>Biking Speed</h4>
-      <RadioButton collection={bikeSpeeds} bind:group={bikeSpeed} />
-
-
-      <h4>eBike Speed</h4>
-            <RadioButton collection={ebikeSpeeds} bind:group={ebikeSpeed} />
-
-      <h3>Public Transport</h3>
-
-      <div class="radio-group-wrapper">
-        <h4>Buses</h4>
-        <RadioGroup collection={busPowers} bind:group={busPower} />
-      </div>
-      
-      <div class="radio-group-wrapper">
-        <h4>Trains</h4>
-        <RadioGroup collection={trainPowers} bind:group={trainPower} />
+      <div class="section-wrapper">
+        <h2>Travel Options</h2>
+        <p>
+          Everyone is different, and not all travel modes will work for
+          everybody. Use the options to find the best trips for you!
+        </p>
+        <h4>Travel Time</h4>
+        <RadioGroup collection={travelTimes} bind:group={travelTime} />
+        <p>
+          Choosing to travel outside of peak hours will result in faster trips, reduced costs,
+          and lower emissions.
+        </p>
       </div>
 
-      <h3>Car</h3>
-      <h4>Size</h4>
-      <RadioGroup collection={carSizes} bind:group={carSize} />
+      <h3 on:click={() => (activeVisible = !activeVisible)}>
+        <span>Walking &amp; Cycling</span>
+        <img src="/expand_less_black_24dp.svg" style={!activeVisible ? 'transform: rotate(180deg)' : ''} />
+      </h3>
+      {#if activeVisible}
+        <div class="section-wrapper">
+          <p>
+            Walking &amp; cycling are great options for shorter trips. You’ll
+            lower your carbon emissions by traveling faster, and you’ll become
+            more healthy too!
+          </p>
+          <h4>Walking Speed</h4>
+          <RadioButton collection={walkSpeeds} bind:group={walkSpeed} />
 
-      <h4>Type</h4>
-            <RadioButton collection={carTypes} bind:group={carType} />
+          <h4>Biking Speed</h4>
+          <RadioButton collection={bikeSpeeds} bind:group={bikeSpeed} />
 
-      {#if carType === 'electric'}
-        <h4>Charge Type</h4>
-        <RadioButton collection={evPowers} bind:group={evPower} />
+          <h4>eBike Speed</h4>
+          <RadioButton collection={ebikeSpeeds} bind:group={ebikeSpeed} />
+        </div>
       {/if}
 
-      <h4>Passengers</h4>
-      <RadioButton collection={carPassengers} bind:group={carPassenger} />
+      <h3 on:click={() => (ptVisible = !ptVisible)}>
+        <span>Public Transport</span>
+        <img src="/expand_less_black_24dp.svg" style={!ptVisible ? 'transform: rotate(180deg)' : ''} />
+      </h3>
+      {#if ptVisible}
+        <div class="section-wrapper">
+          <p>
+            Public transport can be the most convenient option, but it will depend on the route. Buses in Tāmaki Makaurau are also being replaced with electric options!
+          </p>
+          <div class="radio-group-wrapper">
+            <h4>Buses</h4>
+            <RadioGroup collection={busPowers} bind:group={busPower} />
+          </div>
+
+          <div class="radio-group-wrapper">
+            <h4>Trains</h4>
+            <RadioGroup collection={trainPowers} bind:group={trainPower} />
+          </div>
+        </div>
+      {/if}
+
+      <h3 on:click={() => (carVisible = !carVisible)}>
+        <span>Car</span>
+        <img src="/expand_less_black_24dp.svg" style={!carVisible ? 'transform: rotate(180deg)' : ''} />
+      </h3>
+      {#if carVisible}
+        <div class="section-wrapper">
+          <p>
+            While every car will get stuck in traffic, more fuel efficient cars
+            will release less carbon dioxide into the atmosphere.
+          </p>
+          <h4>Size</h4>
+          <RadioGroup collection={carSizes} bind:group={carSize} />
+
+          <h4>Fuel Type</h4>
+          <RadioButton collection={carTypes} bind:group={carType} />
+
+          {#if carType === 'electric'}
+            <h4>Charge Type</h4>
+            <RadioButton collection={evPowers} bind:group={evPower} />
+          {/if}
+
+          <h4>Passengers</h4>
+          <RadioButton collection={carPassengers} bind:group={carPassenger} />
+        </div>
+      {/if}
     </div>
   </div>
   <div class="results">
@@ -214,13 +266,44 @@
     height: 100%;
   }
 
+  .brand {
+    background: #2d3039;
+    color: #fff;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .brand img {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.625rem;
+  }
+
+  h1 {
+    font-size: 1.125rem;
+    margin: 0;
+    flex: 1;
+  }
+
   .query {
     width: 300px;
     box-sizing: border-box;
-    padding: 1rem;
+    padding: 0;
     box-shadow: 1px 0 0 rgba(0, 0, 0, 0.2);
     overflow-y: auto;
     z-index: 2;
+    background: #fafafa;
+  }
+
+  .section-wrapper {
+    padding: 0.5rem 1rem;
+    background: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  }
+
+  .search-wrapper {
+    background: #f4f4f4;
   }
 
   .results {
@@ -232,9 +315,40 @@
     z-index: 1;
   }
 
+  h2 {
+    font-size: 1.25rem;
+    margin: 1rem 0 0.75rem;
+  }
+
+  h3 {
+    font-size: 1.125rem;
+    padding: 0.75rem 1rem;
+    margin: 0;
+    background: #f4f4f4;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    user-select: none;
+    display: flex;
+  }
+
+  h3:hover {
+    background: #eee;
+  }
+  h3:active {
+    background: #ddd;
+  }
+
+  h3 span {
+    flex: 1;
+  }
+
   h4 {
     font-size: 1rem;
     margin: 1rem 0 0.5rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
   }
 
   .radio-group-wrapper {

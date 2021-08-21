@@ -3,27 +3,22 @@
 
   const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)
 
-  const name = (Math.random()).toString()
+  const name = Math.random().toString()
 </script>
 
 <div>
-{#each collection as item}
-  <label>
-    <input
-      type="radio"
-      bind:group={group}
-      name={name}
-      value={item}
-    />
-    <span>{capitalize(item)}</span>
-  </label>
-{/each}
+  {#each collection as item}
+    <label>
+      <input type="radio" bind:group {name} value={item} />
+      <span>{capitalize(item)}</span>
+    </label>
+  {/each}
 </div>
 
 <style>
   div {
     display: inline-flex;
-    background: #eee;
+    background: rgba(0, 0, 0, 0.05);
     border-radius: 5px;
     flex-shrink: 1;
   }
@@ -40,9 +35,9 @@
     border-radius: 5px;
   }
   span:hover {
-    background: rgba(0,0,0,0.075);
+    background: rgba(0, 0, 0, 0.075);
   }
-  :checked + span{
+  :checked + span {
     background: #0060df;
     color: #fff;
   }
