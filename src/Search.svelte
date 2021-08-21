@@ -19,8 +19,11 @@
   let fromOption = null
   let toOption = null
 
-  $: fromInput && timeout === 0 ? fromInput.value = searchFromText || '' : null
-  $: toInput && timeout === 0 ? toInput.value = searchToText || '' : null
+  $: fromOption === null && timeout === 0 ? fromOption = searchFromText : null
+  $: toOption === null && timeout === 0 ? toOption = searchToText : null
+  $: fromInput && timeout === 0 ? fromInput.value = (searchFromText || {}).address || '' : null
+  $: toInput && timeout === 0 ? toInput.value = (searchToText || {}).address || '' : null
+  
 
   let timeout = 0
   let currentString = ''
@@ -71,10 +74,10 @@
   }
 
   const confirmOptions = () => {
-    if (fromOption === null) {
+    if (fromOption == null) {
       fromInput.focus()
       return
-    } else if (toOption === null) {
+    } else if (toOption == null) {
       toInput.focus()
       return
     }

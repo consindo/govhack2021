@@ -21,8 +21,8 @@
   let walkData = null
   let driveData = null
 
-  let searchFromText = ''
-  let searchToText = ''
+  let searchFromText = null
+  let searchToText = null
 
   const handleSearch = async (event) => {
     loading = true
@@ -32,8 +32,8 @@
     driveData = null
     mapBounds = event.detail
 
-    searchFromText = event.detail.from.address
-    searchToText = event.detail.to.address
+    searchFromText = event.detail.from
+    searchToText = event.detail.to
 
     // this will then work async to get all the data into the right place
     await Promise.any([
@@ -149,11 +149,6 @@
     .sort((a, b) => {
       return a.total.carbonEmissions - b.total.carbonEmissions
     })
-
-  const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)
-
-  const speedify = (speed, index) =>
-    `${['Normal', 'Quick', 'Fast'][index]} (${speed}km/h)`
 </script>
 
 <Splash on:search={handleSearch} />
@@ -185,6 +180,7 @@
       <h3 on:click={() => (activeVisible = !activeVisible)}>
         <span>Walking &amp; Cycling</span>
         <img
+          alt="expand / collapse"
           src="/expand_less_black_24dp.svg"
           style={!activeVisible ? 'transform: rotate(180deg)' : ''}
         />
@@ -210,6 +206,7 @@
       <h3 on:click={() => (ptVisible = !ptVisible)}>
         <span>Public Transport</span>
         <img
+          alt="expand / collapse"
           src="/expand_less_black_24dp.svg"
           style={!ptVisible ? 'transform: rotate(180deg)' : ''}
         />
@@ -236,6 +233,7 @@
       <h3 on:click={() => (carVisible = !carVisible)}>
         <span>Car</span>
         <img
+          alt="expand / collapse"
           src="/expand_less_black_24dp.svg"
           style={!carVisible ? 'transform: rotate(180deg)' : ''}
         />
@@ -266,7 +264,7 @@
   <div class="results">
     {#if itineraries.length > 0}
       <div class="sort-wrapper">
-        <img src="/south_white_18dp.svg" />
+        <img role="presentation" alt="" src="/south_white_18dp.svg" />
         <span>Sorted by emissions</span>
       </div>
     {/if}
