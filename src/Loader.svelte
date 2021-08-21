@@ -5,7 +5,7 @@
   .spinner {
     width: 40px;
     height: 40px;
-    background-color: #333;
+    background-color: #0060df;
 
     margin: 25px auto 25px;
     -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;

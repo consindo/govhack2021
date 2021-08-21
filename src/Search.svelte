@@ -98,6 +98,7 @@
       type="text"
       placeholder="Choose starting point"
     />
+    {#if fromResults.length > 0 || fromLoading}
     <div class="results">
       {#if fromLoading}
         <Loader />
@@ -108,6 +109,7 @@
         {/each}
       </ul>
     </div>
+    {/if}
   </div>
   <div class="container">
     <input
@@ -117,6 +119,7 @@
       type="text"
       placeholder="Choose destination"
     />
+    {#if toResults.length > 0 || toLoading}
     <div class="results">
       {#if toLoading}
         <Loader />
@@ -127,6 +130,7 @@
         {/each}
       </ul>
     </div>
+    {/if}
   </div>
   <div class="container">
     <button on:click={confirmOptions}>Show my options</button>
@@ -157,8 +161,13 @@
   .search .results {
     position: absolute;
     z-index: 1;
-    background: #eee;
+    background: #f4f4f4;
+    color: #222;
     width: 100%;
+    box-shadow:0 0 0 1px rgba(0,0,0,0.15) inset, 0 1px 10px rgba(0,0,0,0.15);
+    font-size: 0.875rem;
+    border-radius: 5px;
+    overflow: hidden;
   }
   .search .results ul {
     margin: 0;
@@ -166,15 +175,18 @@
     list-style-type: none;
   }
   .search .results li {
-    padding: 0.5rem;
+    padding: 0.625rem 0.5rem;
     cursor: default;
     user-select: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
+  .search .results li:last-child {
+    border-bottom: 0;
+  }
   .search .results li:hover {
-    background: rgba(0, 0, 0, 0.15);
+    background: rgba(0, 0, 0, 0.1);
   }
   .search .results li:active {
-    background: rgba(0, 0, 0, 0.25);
+    background: rgba(0, 0, 0, 0.2);
   }
 </style>

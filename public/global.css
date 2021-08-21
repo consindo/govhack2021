@@ -44,6 +44,12 @@ textarea {
 	border-radius: 2px;
 }
 
+input:focus {
+	outline: none;
+	border-color: #0060df;
+	box-shadow: 0 0 0 1px #0060df;
+}
+
 input:disabled {
 	color: #ccc;
 }

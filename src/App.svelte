@@ -9,6 +9,9 @@
   import Loader from './Loader.svelte'
   import Itinerary from './Itinerary.svelte'
   import MapView from './Map.svelte'
+  import RadioGroup from './RadioGroup.svelte'
+  import RadioButton from './RadioButton.svelte'
+
 
   $: mapBounds = {}
   let loading = false
@@ -148,139 +151,45 @@
     <Search on:search={handleSearch} />
     <div>
       <h4>Travel Time</h4>
-      {#each travelTimes as time}
-        <label>
-          <input
-            type="radio"
-            bind:group={travelTime}
-            name="travelTime"
-            value={time}
-          />
-          {capitalize(time)}
-        </label>
-      {/each}
+      <RadioGroup collection={travelTimes} bind:group={travelTime} />
 
       <h3>Walking &amp; Cycling</h3>
       <h4>Walking Speed</h4>
-      {#each walkSpeeds as speed, i}
-        <label>
-          <input
-            type="radio"
-            bind:group={walkSpeed}
-            name="walkSpeed"
-            value={speed}
-          />
-          {speedify(speed, i)}
-        </label>
-      {/each}
+      <RadioButton collection={walkSpeeds} bind:group={walkSpeed} />
 
       <h4>Biking Speed</h4>
-      {#each bikeSpeeds as speed, i}
-        <label>
-          <input
-            type="radio"
-            bind:group={bikeSpeed}
-            name="bikeSpeed"
-            value={speed}
-          />
-          {speedify(speed, i)}
-        </label>
-      {/each}
+      <RadioButton collection={bikeSpeeds} bind:group={bikeSpeed} />
+
 
       <h4>eBike Speed</h4>
-      {#each ebikeSpeeds as speed, i}
-        <label>
-          <input
-            type="radio"
-            bind:group={ebikeSpeed}
-            name="ebikeSpeed"
-            value={speed}
-          />
-          {speedify(speed, i)}
-        </label>
-      {/each}
-
+            <RadioButton collection={ebikeSpeeds} bind:group={ebikeSpeed} />
 
       <h3>Public Transport</h3>
-      <h4>Buses</h4>
-      {#each busPowers as power}
-        <label>
-          <input
-            type="radio"
-            bind:group={busPower}
-            name="busPower"
-            value={power}
-          />
-          {capitalize(power)}
-        </label>
-      {/each}
-      <h4>Trains</h4>
-      {#each trainPowers as power}
-        <label>
-          <input
-            type="radio"
-            bind:group={trainPower}
-            name="trainPower"
-            value={power}
-          />
-          {capitalize(power)}
-        </label>
-      {/each}
+
+      <div class="radio-group-wrapper">
+        <h4>Buses</h4>
+        <RadioGroup collection={busPowers} bind:group={busPower} />
+      </div>
+      
+      <div class="radio-group-wrapper">
+        <h4>Trains</h4>
+        <RadioGroup collection={trainPowers} bind:group={trainPower} />
+      </div>
 
       <h3>Car</h3>
       <h4>Size</h4>
-      {#each carSizes as size}
-        <label>
-          <input
-            type="radio"
-            bind:group={carSize}
-            name="carSize"
-            value={size}
-          />
-          {capitalize(size)}
-        </label>
-      {/each}
+      <RadioGroup collection={carSizes} bind:group={carSize} />
 
       <h4>Type</h4>
-      {#each carTypes as type}
-        <label>
-          <input
-            type="radio"
-            bind:group={carType}
-            name="carType"
-            value={type}
-          />
-          {capitalize(type)}
-        </label>
-      {/each}
+            <RadioButton collection={carTypes} bind:group={carType} />
 
       {#if carType === 'electric'}
         <h4>Charge Type</h4>
-        {#each evPowers as power}
-          <label>
-            <input
-              type="radio"
-              bind:group={evPower}
-              name="evPower"
-              value={power}
-            />
-            {capitalize(power.replace('EV ', ''))}
-          </label>
-        {/each}
+        <RadioButton collection={evPowers} bind:group={evPower} />
       {/if}
 
       <h4>Passengers</h4>
-      {#each carPassengers as passenger}
-        <label>
-          <input
-            type="radio"
-            bind:group={carPassenger}
-            name="carPassenger"
-            value={passenger}
-          />
-          {passenger}
-        </label>
-      {/each}
+      <RadioButton collection={carPassengers} bind:group={carPassenger} />
     </div>
   </div>
   <div class="results">
@@ -321,6 +230,21 @@
     background: #f4f4f4;
     overflow-y: auto;
     z-index: 1;
+  }
+
+  h4 {
+    font-size: 1rem;
+    margin: 1rem 0 0.5rem;
+  }
+
+  .radio-group-wrapper {
+    padding: 0.25rem 0 0.5rem;
+    display: flex;
+    align-items: center;
+  }
+  .radio-group-wrapper h4 {
+    margin: 0;
+    flex: 1;
   }
 
   ul {
