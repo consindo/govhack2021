@@ -35,7 +35,7 @@
     }
 
     const result = await geocode(value)
-    const addresses = result.response.addresses.map(i => ({
+    const addresses = result.response.addresses.map((i) => ({
       address: i.address.split('\n')[0],
       lat: i.lat,
       lon: i.lng,
@@ -51,14 +51,14 @@
 
   const select = (point, index) => () => {
     if (point === 'from') {
-      let item  = fromResults[index]
+      let item = fromResults[index]
       fromOption = item
       fromResults = []
       fromInput.value = item.address
 
       toInput.focus()
     } else if (point === 'to') {
-      let item  = toResults[index]
+      let item = toResults[index]
       toOption = item
       toResults = []
       toInput.value = item.address
@@ -91,29 +91,39 @@
 
 <div class="search">
   <div class="container">
-    <input bind:this={fromInput} on:change={search('from')} on:keyup={search('from')} type="text"
-    placeholder="Choose starting point">
+    <input
+      bind:this={fromInput}
+      on:change={search('from')}
+      on:keyup={search('from')}
+      type="text"
+      placeholder="Choose starting point"
+    />
     <div class="results">
       {#if fromLoading}
-      <Loader />
+        <Loader />
       {/if}
       <ul>
         {#each fromResults as result, i}
-        <li on:click={select('from', i)}>{result.address}</li>
+          <li on:click={select('from', i)}>{result.address}</li>
         {/each}
       </ul>
     </div>
   </div>
   <div class="container">
-    <input bind:this={toInput} on:change={search('to')} on:keyup={search('to')} type="text"
-    placeholder="Choose destination">
+    <input
+      bind:this={toInput}
+      on:change={search('to')}
+      on:keyup={search('to')}
+      type="text"
+      placeholder="Choose destination"
+    />
     <div class="results">
       {#if toLoading}
-      <Loader />
+        <Loader />
       {/if}
       <ul>
         {#each toResults as result, i}
-        <li on:click={select('to', i)}>{result.address}</li>
+          <li on:click={select('to', i)}>{result.address}</li>
         {/each}
       </ul>
     </div>

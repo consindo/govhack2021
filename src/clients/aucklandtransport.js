@@ -75,7 +75,7 @@ export const processPlan = (plan) => {
         let distanceKilometers = 0
         if (j.distanceExact) {
           distanceKilometers = j.distanceExact / 1000
-        } else if (j.stops) {
+        } else if (j.stops.length > 0) {
           // if the AT API doesn't tell us, we have to calculate
           distanceKilometers = calculateDistance(
             j.stops.map((k) => k.geometry.data)
@@ -95,12 +95,36 @@ export const processPlan = (plan) => {
           mode
         )
 
+        const geojson = {
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'LineString',
+            coordinates: [],
+          },
+        }
+        // create a vector
+        if (j.stops.length > 0) {
+          geojson.geometry.coordinates = j.stops.map((k) =>
+            k.geometry.data
+              .slice()
+              .reverse()
+              .map((i) => parseFloat(i))
+          )
+        } else {
+          geojson.geometry.coordinates = [
+            [parseFloat(j.startLon), parseFloat(j.startLat)],
+            [parseFloat(j.endLon), parseFloat(j.endLat)],
+          ]
+        }
+
         return {
           mode,
           description: j.routeCode || '',
           distanceKilometers,
           timeMinutes,
           carbonEmissions,
+          route: geojson,
         }
       })
 
@@ -109,13 +133,23 @@ export const processPlan = (plan) => {
       let distanceKilometers = 0
       let timeMinutes = 0
       let carbonEmissions = 0
+      const geojson = {
+        type: 'Feature',
+        properties: {},
+        geometry: {
+          type: 'LineString',
+          coordinates: [],
+        },
+      }
       legs.forEach((l) => {
         allModes.add(l.mode)
         allRoutes.add(l.description)
         distanceKilometers += l.distanceKilometers
         timeMinutes += l.timeMinutes
         carbonEmissions += l.carbonEmissions
+        geojson.geometry.coordinates.push(l.route.geometry.coordinates)
       })
+      geojson.geometry.coordinates = geojson.geometry.coordinates.flat()
       allModes.delete('walk')
       allRoutes.delete('')
       const description =
@@ -129,10 +163,12 @@ export const processPlan = (plan) => {
           distanceKilometers,
           timeMinutes,
           carbonEmissions,
+          route: geojson,
         },
         legs,
       }
     })
+    // deduplicate
     .filter((i) => {
       if (itineraryDescriptions[i.total.description] === undefined) {
         itineraryDescriptions[i.total.description] = true
@@ -141,20 +177,26 @@ export const processPlan = (plan) => {
       return false
     })
 
+  // only take the top 3 options
   return {
-    processed: itineraries,
+    processed: itineraries.slice(0, 3),
   }
 }
 
 export const processRoadPlan = (mode) => {
   return (roadPlan) => {
-    const distanceKilometers = calculateDistance(
-      roadPlan.response.itineraries[0].PathSegments.map((i) =>
-        i.Polyline.split(';').map((j) =>
-          j.split(', ').map((k) => parseFloat(k))
-        )
-      ).flat()
-    )
+    const coordinates = roadPlan.response.itineraries[0].PathSegments.map((i) =>
+      i.Polyline.split(';').map((j) => j.split(', ').map((k) => parseFloat(k)))
+    ).flat()
+    const geojson = {
+      type: 'Feature',
+      properties: {},
+      geometry: {
+        type: 'LineString',
+        coordinates: coordinates.map((i) => i.slice().reverse()),
+      },
+    }
+    const distanceKilometers = calculateDistance(coordinates)
     const timeMinutes = roadPlan.response.itineraries[0].DurationMinutes
     const description = mode.charAt(0).toUpperCase() + mode.slice(1)
     const carbonEmissions = calculateCarbon(
@@ -171,6 +213,7 @@ export const processRoadPlan = (mode) => {
             distanceKilometers,
             timeMinutes,
             carbonEmissions,
+            route: geojson,
           },
           legs: [
             {
@@ -179,6 +222,7 @@ export const processRoadPlan = (mode) => {
               distanceKilometers,
               timeMinutes,
               carbonEmissions,
+              route: geojson,
             },
           ],
         },
