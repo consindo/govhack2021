@@ -114,7 +114,7 @@ export const geocode = async (searchString) => {
   return data
 }
 
-export const processPlan = (plan) => {
+export const processPlan = (plan, options) => {
   if (plan === null) return null
   const itineraryDescriptions = {}
   const itineraries = plan.response.itineraries
@@ -139,18 +139,10 @@ export const processPlan = (plan) => {
         const mode = j.mode.toLowerCase()
         const timeMinutes = j.duration / 60000
 
-        // todo, make configurable
-        const modeMap = {
-          walk: ['Foot'],
-          bus: ['Bus', 'Diesel'],
-          train: ['Rail', 'Electric train'],
-          ferry: ['Ferry', 'Passenger ferry'],
-        }
-
         const carbonEmissions = calculateCarbon(
           distanceKilometers,
           timeMinutes,
-          modeMap[mode]
+          options.emissionOptions[mode]
         )
 
         const geojson = {

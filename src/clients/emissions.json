@@ -573,8 +573,8 @@
   "Rail": {
     "Light rail": 35.08,
     "Tram": 35.08,
-    "Train": 41.15,
-    "Electric train": 28.0
+    "Diesel": 41.15,
+    "Electric": 28.0
   },
   "Bus": {
     "Diesel": 104.71,

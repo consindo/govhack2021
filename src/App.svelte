@@ -49,6 +49,12 @@
   }
   $: loadPt(mapBounds, travelTime)
 
+  let busPower = 'Diesel'
+  let busPowers = ['Diesel', 'Electric']
+
+  let trainPower = 'Electric'
+  let trainPowers = ['Diesel', 'Electric']
+
   let carSize = 'Medium'
   let carSizes = ['Small', 'Medium', 'Large']
 
@@ -79,7 +85,14 @@
   ]
 
   $: itineraries = [
-    processPlan(ptData),
+    processPlan(ptData, {
+      emissionOptions: {
+        walk: ['Foot'],
+        bus: ['Bus', busPower],
+        train: ['Rail', trainPower],
+        ferry: ['Ferry', 'Passenger ferry'],
+      }
+    }),
     processRoadPlan(cycleData, 'Bike', {
       travelTime,
       emissionOptions: ['Bike', 'Pedal'],
@@ -130,6 +143,32 @@
             value={time}
           />
           {capitalize(time)}
+        </label>
+      {/each}
+
+      <h3>Public Transport</h3>
+      <h4>Buses</h4>
+      {#each busPowers as power}
+        <label>
+          <input
+            type="radio"
+            bind:group={busPower}
+            name="busPower"
+            value={power}
+          />
+          {capitalize(power)}
+        </label>
+      {/each}
+      <h4>Trains</h4>
+      {#each trainPowers as power}
+        <label>
+          <input
+            type="radio"
+            bind:group={trainPower}
+            name="trainPower"
+            value={power}
+          />
+          {capitalize(power)}
         </label>
       {/each}
 
