@@ -59,12 +59,4 @@
     font-size: 4em;
     font-weight: 100;
   }
-
-  pre {
-    font-family: 'Consolas', 'monospace';
-    max-height: 350px;
-    color: #fff;
-    background: #222;
-    overflow: scroll;
-  }
 </style>

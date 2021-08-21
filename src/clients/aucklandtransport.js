@@ -2,7 +2,7 @@ const apikey = process.env.AT_APIKEY
 const endpoint = 'https://api.at.govt.nz'
 
 import { calculateDistance } from './distance.js'
-import { calculateCarbon } from './carbonEmissions.js'
+import { calculateCarbon } from './carbonemissions.js'
 
 // at api wants commas to be encoded in some fields but not others
 const paramsToQuery = (params) =>
