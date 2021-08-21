@@ -2,6 +2,7 @@
   import { plan, roadPlan, processPlan, processRoadPlan } from './clients/aucklandtransport.js'
   import Search from './Search.svelte'
   import Loader from './Loader.svelte'
+  import MapView from './Map.svelte'
 
   $: itineraries = []
   let loading = false
@@ -28,9 +29,11 @@
 </script>
 
 <main>
-  <h1>govhack2021</h1>
-  <div class="sidebar">
+  <div class="query">
+    <h2>Search</h2>
     <Search on:search={handleSearch} />
+  </div>
+  <div class="results">
     {#if loading}
       <Loader />
     {/if}
@@ -41,22 +44,35 @@
       <p><strong>Carbon Emissions:</strong> {round(itinerary.total.carbonEmissions)}kg</p>
     {/each}
   </div>
-
+  <div class="map">
+    <MapView />
+  </div>
 </main>
 
 <style>
   main {
-    padding: 1em;
     margin: 0 auto;
+    display: flex;
+    height: 100%;
   }
 
-  .sidebar {
-    width: 320px;
+  .query {
+    width: 300px;
+    box-sizing: border-box;
+    padding: 1rem;
+    border-right: 1px solid #ccc;
+    overflow-y: auto;
   }
 
-  h1 {
-    color: #ff3e00;
-    font-size: 4em;
-    font-weight: 100;
+  .results {
+    width: 350px;
+    box-sizing: border-box;
+    padding: 1rem;
+    border-right: 1px solid #ccc;
+    overflow-y: auto;
+  }
+
+  .map {
+    flex: 1;
   }
 </style>
