@@ -20,7 +20,7 @@
 
   const handleSearch = async (event) => {
     loading = true
-    ptData = null
+    
     cycleData = null
     walkData = null
     driveData = null
@@ -28,7 +28,6 @@
 
     // this will then work async to get all the data into the right place
     await Promise.any([
-      plan(event.detail).then((data) => (ptData = data)),
       roadPlan('cycle', event.detail).then((data) => (cycleData = data)),
       roadPlan('walk', event.detail).then((data) => (walkData = data)),
       roadPlan('drive', event.detail).then((data) => (driveData = data)),
@@ -38,6 +37,17 @@
 
   let travelTime = 'peak'
   let travelTimes = ['peak', 'off-peak']
+
+  // this is reactive when the travelTime changes
+  const loadPt = async (mapBounds, travelTime) => {
+    if (Object.keys(mapBounds).length > 0) {
+      ptData = null
+      loading = true
+      await plan(mapBounds, { travelTime }).then((data) => (ptData = data))  
+      loading = false
+    }
+  }
+  $: loadPt(mapBounds, travelTime)
 
   let carSize = 'Small'
   let carSizes = ['Small', 'Medium', 'Large']

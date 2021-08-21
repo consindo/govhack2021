@@ -10,8 +10,38 @@ const paramsToQuery = (params) =>
     .map((i) => `${encodeURIComponent(i)}=${params[i]}`)
     .join('&')
 
-export const plan = async (search) => {
-  console.log(search)
+const requestCache = {}
+
+export const plan = async (search, options) => {
+  let date = new Date()
+  if (date.getDay() > 5) {
+    date.setDate(date.getDate() + 7 - date.getDay() + 1)
+  }
+  const dateString = date.toISOString().split('T')[0]
+  console.log(dateString)
+
+  let time = '12:00'
+  if (options.travelTime === 'peak') {
+    // determine whether it is morning or afternoon peak
+    // based on if they're going to the city or not
+    const britomartLat = -36.844235
+    const britomartLon = 174.768128
+
+    const fromDelta = Math.abs(
+      search.from.lat - britomartLat + search.from.lon - britomartLon
+    )
+    const toDelta = Math.abs(
+      search.to.lat - britomartLat + search.to.lon - britomartLon
+    )
+    if (fromDelta > toDelta) {
+      // going to the city, so morning
+      time = '08:15'
+    } else {
+      // going away from the city, so afternoon
+      time = '17:15'
+    }
+  }
+
   const fromLoc = [search.from.lat, search.from.lon].join(',')
   const toLoc = [search.to.lat, search.to.lon].join(',')
   const query = paramsToQuery({
@@ -20,7 +50,7 @@ export const plan = async (search) => {
     fromLoc,
     toLoc,
     timeMode: 'A',
-    date: encodeURIComponent('2021-08-20T17:26+12:00'),
+    date: encodeURIComponent(`${dateString}T${time}+12:00`),
     modes: 'BUS,TRAIN,FERRY',
     operators: '',
     optimize: 'QUICK',
@@ -31,9 +61,21 @@ export const plan = async (search) => {
     'subscription-key': apikey,
   })
 
-  const res = await fetch(`${endpoint}/journeyplanner/v2/plan?${query}`)
-  const data = await res.json()
-  return data
+  const cacheKey = `plan-${options.travelTime}`
+  const url = `${endpoint}/journeyplanner/v2/plan?${query}`
+  // creates a new cache
+  if (requestCache[cacheKey] === undefined) {
+    requestCache[cacheKey] = { url: '', data: {} }
+  }
+
+  if (requestCache[cacheKey].url !== url) {
+    const res = await fetch(url)
+    const data = await res.json()
+    requestCache[cacheKey] = { url, data }
+    return data
+  } else {
+    return requestCache[cacheKey].data
+  }
 }
 
 export const roadPlan = async (mode, search) => {
