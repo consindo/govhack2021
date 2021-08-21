@@ -15,8 +15,12 @@ const requestCache = {}
 export const plan = async (search, options) => {
   // urgh this logic to get a date is probably wrong, but who cares
   let date = new Date()
-  if (date.getDay() > 5) {
-    date.setDate(date.getDate() + 7 - date.getDay() + 1)
+  date.setHours(23)
+  date.setMinutes(59)
+  if (date.getDay() === 5) {
+    date.setDate(date.getDate() + 2)
+  } else if (date.getDay() === 0) {
+    date.setDate(date.getDate() + 1)
   }
   const dateString = date.toISOString().split('T')[0]
 
