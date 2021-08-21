@@ -9,35 +9,100 @@
   import Loader from './Loader.svelte'
   import MapView from './Map.svelte'
 
-  $: itineraries = []
   $: mapBounds = {}
   let loading = false
 
-  const itcb = (data) => {
-    loading = false
-    console.log(data)
-    const newItineraries = itineraries
-    data.processed.forEach((i) => newItineraries.push(i))
-    itineraries = newItineraries
-  }
+  let ptData = null
+  let cycleData = null
+  let walkData = null
+  let driveData = null
 
   const round = (num) => Math.round((num + Number.EPSILON) * 100) / 100
 
-  const handleSearch = (event) => {
+  const handleSearch = async (event) => {
     loading = true
-    itineraries = []
+    ptData = null
+    cycleData = null
+    walkData = null
+    driveData = null
     mapBounds = event.detail
-    plan(event.detail).then(processPlan).then(itcb)
-    roadPlan('cycle', event.detail).then(processRoadPlan('cycle')).then(itcb)
-    roadPlan('walk', event.detail).then(processRoadPlan('walk')).then(itcb)
-    roadPlan('drive', event.detail).then(processRoadPlan('drive')).then(itcb)
+
+    // this will then work async to get all the data into the right place
+    await Promise.any([
+      plan(event.detail).then((data) => (ptData = data)),
+      roadPlan('cycle', event.detail).then((data) => (cycleData = data)),
+      roadPlan('walk', event.detail).then((data) => (walkData = data)),
+      roadPlan('drive', event.detail).then((data) => (driveData = data)),
+    ])
+    loading = false
   }
+
+  let carSize = 'Small'
+  let carSizes = ['Small', 'Medium', 'Large']
+
+  let carType = 'petrol'
+  let carTypes = [
+    'petrol',
+    'diesel',
+    'hybrid',
+    'plug-in hybrid electric',
+    'electric',
+  ]
+
+  $: itineraries = [
+    processPlan(ptData),
+    processRoadPlan(cycleData, 'cycle', ['Bike', 'Pedal']),
+    processRoadPlan(walkData, 'walk', ['Foot']),
+    processRoadPlan(driveData, 'drive', [
+      'Car',
+      carSize,
+      carType,
+      '1 passenger',
+      'offpeak',
+    ]),
+  ]
+    .filter((i) => i !== null)
+    .map((i) => {
+      return i.processed
+    })
+    .flat()
+    .sort((a, b) => {
+      return a.total.carbonEmissions - b.total.carbonEmissions
+    })
 </script>
 
 <main>
   <div class="query">
     <h2>Search</h2>
     <Search on:search={handleSearch} />
+    <div>
+      <h3>Car</h3>
+      <h4>Size</h4>
+      {#each carSizes as size}
+        <label>
+          <input
+            type="radio"
+            bind:group={carSize}
+            name="carSize"
+            value={size}
+          />
+          {size.charAt(0).toUpperCase() + size.slice(1)}
+        </label>
+      {/each}
+
+      <h4>Type</h4>
+      {#each carTypes as type}
+        <label>
+          <input
+            type="radio"
+            bind:group={carType}
+            name="carType"
+            value={type}
+          />
+          {type.charAt(0).toUpperCase() + type.slice(1)}
+        </label>
+      {/each}
+    </div>
   </div>
   <div class="results">
     {#if loading}

@@ -68,6 +68,7 @@ export const geocode = async (searchString) => {
 }
 
 export const processPlan = (plan) => {
+  if (plan === null) return null
   const itineraryDescriptions = {}
   const itineraries = plan.response.itineraries
     .map((i) => {
@@ -89,10 +90,19 @@ export const processPlan = (plan) => {
 
         const mode = j.mode.toLowerCase()
         const timeMinutes = j.duration / 60000
+
+        // todo, make configurable
+        const modeMap = {
+          walk: ['Foot'],
+          bus: ['Bus', 'Diesel'],
+          train: ['Rail', 'Electric train'],
+          ferry: ['Ferry', 'Passenger ferry'],
+        }
+
         const carbonEmissions = calculateCarbon(
           distanceKilometers,
           timeMinutes,
-          mode
+          modeMap[mode]
         )
 
         const geojson = {
@@ -183,50 +193,49 @@ export const processPlan = (plan) => {
   }
 }
 
-export const processRoadPlan = (mode) => {
-  return (roadPlan) => {
-    const coordinates = roadPlan.response.itineraries[0].PathSegments.map((i) =>
-      i.Polyline.split(';').map((j) => j.split(', ').map((k) => parseFloat(k)))
-    ).flat()
-    const geojson = {
-      type: 'Feature',
-      properties: {},
-      geometry: {
-        type: 'LineString',
-        coordinates: coordinates.map((i) => i.slice().reverse()),
-      },
-    }
-    const distanceKilometers = calculateDistance(coordinates)
-    const timeMinutes = roadPlan.response.itineraries[0].DurationMinutes
-    const description = mode.charAt(0).toUpperCase() + mode.slice(1)
-    const carbonEmissions = calculateCarbon(
-      distanceKilometers,
-      timeMinutes,
-      mode
-    )
+export const processRoadPlan = (roadPlan, mode, emissionOptions) => {
+  if (roadPlan === null) return null
+  const coordinates = roadPlan.response.itineraries[0].PathSegments.map((i) =>
+    i.Polyline.split(';').map((j) => j.split(', ').map((k) => parseFloat(k)))
+  ).flat()
+  const geojson = {
+    type: 'Feature',
+    properties: {},
+    geometry: {
+      type: 'LineString',
+      coordinates: coordinates.map((i) => i.slice().reverse()),
+    },
+  }
+  const distanceKilometers = calculateDistance(coordinates)
+  const timeMinutes = roadPlan.response.itineraries[0].DurationMinutes
+  const description = mode.charAt(0).toUpperCase() + mode.slice(1)
+  const carbonEmissions = calculateCarbon(
+    distanceKilometers,
+    timeMinutes,
+    emissionOptions
+  )
 
-    return {
-      processed: [
-        {
-          total: {
-            description,
+  return {
+    processed: [
+      {
+        total: {
+          description,
+          distanceKilometers,
+          timeMinutes,
+          carbonEmissions,
+          route: geojson,
+        },
+        legs: [
+          {
+            mode,
+            description: '',
             distanceKilometers,
             timeMinutes,
             carbonEmissions,
             route: geojson,
           },
-          legs: [
-            {
-              mode,
-              description: '',
-              distanceKilometers,
-              timeMinutes,
-              carbonEmissions,
-              route: geojson,
-            },
-          ],
-        },
-      ],
-    }
+        ],
+      },
+    ],
   }
 }

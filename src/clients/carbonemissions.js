@@ -1,15 +1,16 @@
-export const calculateCarbon = (distanceKilometers, timeMinutes, mode) => {
+import emissions from './emissions.json'
+console.log(emissions)
+
+export const calculateCarbon = (
+  distanceKilometers,
+  timeMinutes,
+  emissionOptions
+) => {
   if (timeMinutes === 0 || distanceKilometers === 0) return 0
-  // grabbed from here: https://www.bikeradar.com/features/long-reads/cycling-environmental-impact/
-  // need a better source
-  const gkmModes = {
-    train: 49,
-    bus: 101,
-    walk: 56,
-    cycle: 21,
-    drive: 271,
-  }
-  const gkm = gkmModes[mode]
+
+  const gkm = emissionOptions.reduce((accumulator, currentValue) => {
+    return accumulator[currentValue]
+  }, emissions)
 
   const speed = (distanceKilometers / timeMinutes) * 60
   const speedFactor =

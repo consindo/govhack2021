@@ -1,0 +1,364 @@
+{
+  "Car": {
+    "Large": {
+      "diesel": {
+        "1 passenger": {
+          "offpeak": 209.47,
+          "peak": 314.205
+        },
+        "2 passengers": {
+          "offpeak": 104.735,
+          "peak": 157.102
+        },
+        "3 passengers": {
+          "offpeak": 69.823,
+          "peak": 104.734
+        },
+        "4 passengers": {
+          "offpeak": 52.367,
+          "peak": 78.55
+        },
+        "5 passengers": {
+          "offpeak": 41.894,
+          "peak": 62.841
+        }
+      },
+      "electric": {
+        "1 passenger": {
+          "offpeak": 66.88,
+          "peak": 100.32
+        },
+        "2 passengers": {
+          "offpeak": 33.44,
+          "peak": 50.16
+        },
+        "3 passengers": {
+          "offpeak": 22.293,
+          "peak": 33.439
+        },
+        "4 passengers": {
+          "offpeak": 16.72,
+          "peak": 25.08
+        },
+        "5 passengers": {
+          "offpeak": 13.376,
+          "peak": 20.064
+        }
+      },
+      "hybrid": {
+        "1 passenger": {
+          "offpeak": 131.77,
+          "peak": 197.655
+        },
+        "2 passengers": {
+          "offpeak": 65.885,
+          "peak": 98.828
+        },
+        "3 passengers": {
+          "offpeak": 43.923,
+          "peak": 65.885
+        },
+        "4 passengers": {
+          "offpeak": 32.943,
+          "peak": 49.414
+        },
+        "5 passengers": {
+          "offpeak": 26.354,
+          "peak": 39.531
+        }
+      },
+      "petrol": {
+        "1 passenger": {
+          "offpeak": 282.95,
+          "peak": 424.425
+        },
+        "2 passengers": {
+          "offpeak": 141.475,
+          "peak": 212.212
+        },
+        "3 passengers": {
+          "offpeak": 94.317,
+          "peak": 141.475
+        },
+        "4 passengers": {
+          "offpeak": 70.737,
+          "peak": 106.105
+        },
+        "5 passengers": {
+          "offpeak": 56.59,
+          "peak": 84.885
+        }
+      },
+      "plug-in hybrid electric": {
+        "1 passenger": {
+          "offpeak": 77.31,
+          "peak": 115.965
+        },
+        "2 passengers": {
+          "offpeak": 38.655,
+          "peak": 57.983
+        },
+        "3 passengers": {
+          "offpeak": 25.77,
+          "peak": 38.655
+        },
+        "4 passengers": {
+          "offpeak": 19.328,
+          "peak": 28.992
+        },
+        "5 passengers": {
+          "offpeak": 15.462,
+          "peak": 23.193
+        }
+      }
+    },
+    "Medium": {
+      "diesel": {
+        "1 passenger": {
+          "offpeak": 170.61,
+          "peak": 255.915
+        },
+        "2 passengers": {
+          "offpeak": 85.305,
+          "peak": 127.958
+        },
+        "3 passengers": {
+          "offpeak": 56.87,
+          "peak": 85.305
+        },
+        "4 passengers": {
+          "offpeak": 42.653,
+          "peak": 63.98
+        },
+        "5 passengers": {
+          "offpeak": 34.122,
+          "peak": 51.183
+        }
+      },
+      "electric": {
+        "1 passenger": {
+          "offpeak": 53.17,
+          "peak": 79.755
+        },
+        "2 passengers": {
+          "offpeak": 26.585,
+          "peak": 39.877
+        },
+        "3 passengers": {
+          "offpeak": 17.723,
+          "peak": 26.584
+        },
+        "4 passengers": {
+          "offpeak": 13.293,
+          "peak": 19.939
+        },
+        "5 passengers": {
+          "offpeak": 10.634,
+          "peak": 15.951
+        }
+      },
+      "hybrid": {
+        "1 passenger": {
+          "offpeak": 108.95,
+          "peak": 163.425
+        },
+        "2 passengers": {
+          "offpeak": 54.475,
+          "peak": 81.713
+        },
+        "3 passengers": {
+          "offpeak": 36.317,
+          "peak": 54.475
+        },
+        "4 passengers": {
+          "offpeak": 27.238,
+          "peak": 40.857
+        },
+        "5 passengers": {
+          "offpeak": 21.79,
+          "peak": 32.685
+        }
+      },
+      "petrol": {
+        "1 passenger": {
+          "offpeak": 192.28,
+          "peak": 288.42
+        },
+        "2 passengers": {
+          "offpeak": 96.14,
+          "peak": 144.21
+        },
+        "3 passengers": {
+          "offpeak": 64.093,
+          "peak": 96.139
+        },
+        "4 passengers": {
+          "offpeak": 48.07,
+          "peak": 72.105
+        },
+        "5 passengers": {
+          "offpeak": 38.456,
+          "peak": 57.684
+        }
+      },
+      "plug-in hybrid electric": {
+        "1 passenger": {
+          "offpeak": 70.83,
+          "peak": 106.245
+        },
+        "2 passengers": {
+          "offpeak": 35.415,
+          "peak": 53.123
+        },
+        "3 passengers": {
+          "offpeak": 23.61,
+          "peak": 35.415
+        },
+        "4 passengers": {
+          "offpeak": 17.707,
+          "peak": 26.561
+        },
+        "5 passengers": {
+          "offpeak": 14.166,
+          "peak": 21.249
+        }
+      }
+    },
+    "Small": {
+      "diesel": {
+        "1 passenger": {
+          "offpeak": 142.08,
+          "peak": 213.12
+        },
+        "2 passengers": {
+          "offpeak": 71.04,
+          "peak": 106.56
+        },
+        "3 passengers": {
+          "offpeak": 47.36,
+          "peak": 71.04
+        },
+        "4 passengers": {
+          "offpeak": 35.52,
+          "peak": 53.28
+        },
+        "5 passengers": {
+          "offpeak": 28.416,
+          "peak": 42.624
+        }
+      },
+      "electric": {
+        "1 passenger": {
+          "offpeak": 45.67,
+          "peak": 68.505
+        },
+        "2 passengers": {
+          "offpeak": 22.835,
+          "peak": 34.252
+        },
+        "3 passengers": {
+          "offpeak": 15.223,
+          "peak": 22.835
+        },
+        "4 passengers": {
+          "offpeak": 11.418,
+          "peak": 17.127
+        },
+        "5 passengers": {
+          "offpeak": 9.134,
+          "peak": 13.701
+        }
+      },
+      "hybrid": {
+        "1 passenger": {
+          "offpeak": 105.2,
+          "peak": 157.8
+        },
+        "2 passengers": {
+          "offpeak": 52.6,
+          "peak": 78.9
+        },
+        "3 passengers": {
+          "offpeak": 35.067,
+          "peak": 52.6
+        },
+        "4 passengers": {
+          "offpeak": 26.3,
+          "peak": 39.45
+        },
+        "5 passengers": {
+          "offpeak": 21.04,
+          "peak": 31.56
+        }
+      },
+      "petrol": {
+        "1 passenger": {
+          "offpeak": 153.71,
+          "peak": 230.565
+        },
+        "2 passengers": {
+          "offpeak": 76.855,
+          "peak": 115.282
+        },
+        "3 passengers": {
+          "offpeak": 51.237,
+          "peak": 76.856
+        },
+        "4 passengers": {
+          "offpeak": 38.428,
+          "peak": 57.642
+        },
+        "5 passengers": {
+          "offpeak": 30.742,
+          "peak": 46.113
+        }
+      },
+      "plug-in hybrid electric": {
+        "1 passenger": {
+          "offpeak": 29.35,
+          "peak": 44.025
+        },
+        "2 passengers": {
+          "offpeak": 14.675,
+          "peak": 22.013
+        },
+        "3 passengers": {
+          "offpeak": 9.783,
+          "peak": 14.674
+        },
+        "4 passengers": {
+          "offpeak": 7.338,
+          "peak": 11.007
+        },
+        "5 passengers": {
+          "offpeak": 5.87,
+          "peak": 8.805
+        }
+      }
+    }
+  },
+  "Motorcycle": {
+    "Large": 135.01,
+    "Medium": 102.89,
+    "Small": 84.45
+  },
+  "Rail": {
+    "Light rail": 35.08,
+    "Tram": 35.08,
+    "Train": 41.15,
+    "Electric train": 28
+  },
+  "Bus": {
+    "Diesel": 104.71,
+    "Electric": 50
+  },
+  "Bike": {
+    "Pedal": 21,
+    "eBike": 14.8
+  },
+  "Foot": 56,
+  "Ferry": {
+    "Car ferry": 129.518,
+    "Passenger ferry": 18.738
+  }
+}
