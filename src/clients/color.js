@@ -22,8 +22,10 @@ export const getColor = (description, index) => {
   let color
   if (description === 'Drive') {
     color = ['#007198', '#ffffff']
-  } else if (description === 'Cycle') {
+  } else if (description === 'Bike') {
     color = ['#41ad49', '#ffffff']
+  } else if (description === 'eBike') {
+    color = ['#60c367', '#ffffff']
   } else if (description === 'Walk') {
     color = ['#86b332', '#ffffff']
   } else {

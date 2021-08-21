@@ -40,12 +40,17 @@ export const roadPlan = async (mode, search) => {
   // hardcoded for now
   const fromLoc = [search.from.lat, search.from.lon].join(',')
   const toLoc = [search.to.lat, search.to.lon].join(',')
-  const query = paramsToQuery({
+
+  const queryParams = {
     fromLoc,
     toLoc,
     'subscription-key': apikey,
     mode: mode.toUpperCase(),
-  })
+  }
+  if (mode === 'walk') {
+    queryParams.travelSpeed = 5
+  }
+  const query = paramsToQuery(queryParams)
 
   const res = await fetch(`${endpoint}/journeyplanner/v2/roadPlan?${query}`)
   const data = await res.json()
@@ -174,8 +179,9 @@ export const processPlan = (plan) => {
           distanceKilometers,
           timeMinutes,
           carbonEmissions,
-          route: geojson,
           index: 0,
+          showLayer: true,
+          route: geojson,
         },
         legs,
       }
@@ -200,8 +206,11 @@ export const processPlan = (plan) => {
   }
 }
 
-export const processRoadPlan = (roadPlan, mode, emissionOptions) => {
+export const processRoadPlan = (roadPlan, mode, options) => {
   if (roadPlan === null) return null
+  const description = mode
+  mode = mode.toLowerCase()
+
   const coordinates = roadPlan.response.itineraries[0].PathSegments.map((i) =>
     i.Polyline.split(';').map((j) => j.split(', ').map((k) => parseFloat(k)))
   ).flat()
@@ -214,12 +223,19 @@ export const processRoadPlan = (roadPlan, mode, emissionOptions) => {
     },
   }
   const distanceKilometers = calculateDistance(coordinates)
-  const timeMinutes = roadPlan.response.itineraries[0].DurationMinutes
-  const description = mode.charAt(0).toUpperCase() + mode.slice(1)
+  let timeMinutes = roadPlan.response.itineraries[0].DurationMinutes
+  if (mode === 'ebike') {
+    // assume that ebike is quite a bit faster than riding a regular bike (25km/h ish)
+    timeMinutes = Math.round(timeMinutes * 0.65)
+  } else if (mode === 'drive') {
+    if (options.travelTime === 'peak') {
+      timeMinutes = Math.round(timeMinutes * 1.5)
+    }
+  }
   const carbonEmissions = calculateCarbon(
     distanceKilometers,
     timeMinutes,
-    emissionOptions
+    options.emissionOptions
   )
 
   return {
@@ -230,8 +246,9 @@ export const processRoadPlan = (roadPlan, mode, emissionOptions) => {
           distanceKilometers,
           timeMinutes,
           carbonEmissions,
-          route: geojson,
           index: 0,
+          showLayer: mode !== 'ebike',
+          route: geojson,
         },
         legs: [
           {

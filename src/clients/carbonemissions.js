@@ -20,3 +20,5 @@ export const calculateCarbon = (
   const carbon = distanceKilometers * gkm * speedFactor
   return Math.round(carbon / 10) / 100
 }
+
+window.jono = calculateCarbon

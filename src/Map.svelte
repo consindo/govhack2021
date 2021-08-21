@@ -47,7 +47,7 @@
     itineraries.forEach((i) => {
       const id = i.total.description
       // deduplicates layers
-      if (loadedLayers[id] === undefined) {
+      if (loadedLayers[id] === undefined && i.total.showLayer === true) {
         loadedLayers[id] = true
       } else {
         return

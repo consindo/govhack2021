@@ -36,12 +36,16 @@
     loading = false
   }
 
+  let travelTime = 'peak'
+  let travelTimes = ['peak', 'off-peak']
+
   let carSize = 'Small'
   let carSizes = ['Small', 'Medium', 'Large']
 
-  let carType = 'petrol'
+  let carType = 'regular petrol'
   let carTypes = [
-    'petrol',
+    'regular petrol',
+    'premium petrol',
     'diesel',
     'hybrid',
     'plug-in hybrid electric',
@@ -50,19 +54,19 @@
 
   $: itineraries = [
     processPlan(ptData),
-    processRoadPlan(cycleData, 'cycle', ['Bike', 'Pedal']),
-    processRoadPlan(walkData, 'walk', ['Foot']),
-    processRoadPlan(driveData, 'drive', [
+    processRoadPlan(cycleData, 'Bike', { travelTime, emissionOptions: ['Bike', 'Pedal']}),
+    processRoadPlan(cycleData, 'eBike', { travelTime, emissionOptions: ['Bike', 'eBike']}),
+    processRoadPlan(walkData, 'Walk', { travelTime, emissionOptions: ['Foot']}),
+    processRoadPlan(driveData, 'Drive', { travelTime, emissionOptions: [
       'Car',
       carSize,
       carType,
       '1 passenger',
-      'offpeak',
-    ]),
+      'co2_per_km',
+    ]}),
   ]
     .filter((i) => i !== null)
     .map((i) => {
-      console.log(i)
       return i.processed
     })
     .flat()
@@ -76,19 +80,32 @@
     <h2>Search</h2>
     <Search on:search={handleSearch} />
     <div>
+      <h4>Travel Time</h4>
+      {#each travelTimes as time}
+          <label>
+            <input
+              type="radio"
+              bind:group={travelTime}
+              name="travelTime"
+              value={time}
+            />
+            {time.charAt(0).toUpperCase() + time.slice(1)}
+          </label>
+        {/each}
+
       <h3>Car</h3>
       <h4>Size</h4>
-      {#each carSizes as size}
-        <label>
-          <input
-            type="radio"
-            bind:group={carSize}
-            name="carSize"
-            value={size}
-          />
-          {size.charAt(0).toUpperCase() + size.slice(1)}
-        </label>
-      {/each}
+        {#each carSizes as size}
+          <label>
+            <input
+              type="radio"
+              bind:group={carSize}
+              name="carSize"
+              value={size}
+            />
+            {size.charAt(0).toUpperCase() + size.slice(1)}
+          </label>
+        {/each}
 
       <h4>Type</h4>
       {#each carTypes as type}
