@@ -18,7 +18,7 @@
     ')',
     ''
   )
-  $: trees = round(itinerary.total.carbonEmissions / 6, 10)
+  $: trees = round(itinerary.total.carbonEmissions / 6, 10) || round(itinerary.total.carbonEmissions / 6, 100)
 </script>
 
 <li style="--itinerary-color: {color[0]}; --itinerary-text-color: {color[1]}">
