@@ -169,14 +169,17 @@
         <h4>Travel Time</h4>
         <RadioGroup collection={travelTimes} bind:group={travelTime} />
         <p>
-          Choosing to travel outside of peak hours will result in faster trips, reduced costs,
-          and lower emissions.
+          Choosing to travel outside of peak hours will result in faster trips,
+          reduced costs, and lower emissions.
         </p>
       </div>
 
       <h3 on:click={() => (activeVisible = !activeVisible)}>
         <span>Walking &amp; Cycling</span>
-        <img src="/expand_less_black_24dp.svg" style={!activeVisible ? 'transform: rotate(180deg)' : ''} />
+        <img
+          src="/expand_less_black_24dp.svg"
+          style={!activeVisible ? 'transform: rotate(180deg)' : ''}
+        />
       </h3>
       {#if activeVisible}
         <div class="section-wrapper">
@@ -198,12 +201,17 @@
 
       <h3 on:click={() => (ptVisible = !ptVisible)}>
         <span>Public Transport</span>
-        <img src="/expand_less_black_24dp.svg" style={!ptVisible ? 'transform: rotate(180deg)' : ''} />
+        <img
+          src="/expand_less_black_24dp.svg"
+          style={!ptVisible ? 'transform: rotate(180deg)' : ''}
+        />
       </h3>
       {#if ptVisible}
         <div class="section-wrapper">
           <p>
-            Public transport can be the most convenient option, but it will depend on the route. Buses in Tāmaki Makaurau are also being replaced with electric options!
+            Public transport can be the most convenient option, but it will
+            depend on the route. Buses in Tāmaki Makaurau are also being
+            replaced with electric options!
           </p>
           <div class="radio-group-wrapper">
             <h4>Buses</h4>
@@ -219,7 +227,10 @@
 
       <h3 on:click={() => (carVisible = !carVisible)}>
         <span>Car</span>
-        <img src="/expand_less_black_24dp.svg" style={!carVisible ? 'transform: rotate(180deg)' : ''} />
+        <img
+          src="/expand_less_black_24dp.svg"
+          style={!carVisible ? 'transform: rotate(180deg)' : ''}
+        />
       </h3>
       {#if carVisible}
         <div class="section-wrapper">
@@ -246,10 +257,10 @@
   </div>
   <div class="results">
     {#if itineraries.length > 0}
-    <div class="sort-wrapper">
-      <img src="/south_white_18dp.svg">
-      <span>Sorted by emissions</span>
-    </div>
+      <div class="sort-wrapper">
+        <img src="/south_white_18dp.svg" />
+        <span>Sorted by emissions</span>
+      </div>
     {/if}
     {#if loading}
       <Loader />
@@ -384,7 +395,6 @@
   .sort-wrapper img {
     margin-right: 3px;
   }
-
 
   ul {
     margin: 0;

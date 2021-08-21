@@ -2,7 +2,7 @@
   import { getColor } from './clients/color.js'
   export let itinerary
 
-  const round = (num) => Math.round((num + Number.EPSILON) * 100) / 100
+  const round = (num, factor = 100) => Math.round((num + Number.EPSILON) * factor) / factor
 
   const timeConvert = (mins) => {
     if (mins < 60) {
@@ -18,6 +18,7 @@
     ')',
     ''
   )
+  $: trees = round(itinerary.total.carbonEmissions / 6, 10)
 </script>
 
 <li style="--itinerary-color: {color[0]}; --itinerary-text-color: {color[1]}">
@@ -31,12 +32,27 @@
     <p>
       <strong>{timeConvert(itinerary.total.timeMinutes)}</strong> &middot; {round(
         itinerary.total.distanceKilometers
-      )}<small>km</small>
+      , 10)}<small>km</small>
     </p>
   </div>
-  <h3 class="emissions">
-    {round(itinerary.total.carbonEmissions)}<span>kg</span>
-  </h3>
+  <div class="emissions">
+    <h3>{round(itinerary.total.carbonEmissions)}<span>kg</span></h3>
+    <h5>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        enable-background="new 0 0 20 20"
+        height="18px"
+        viewBox="0 0 20 20"
+        width="18px"
+        fill="#000000"
+        ><g><rect fill="none" height="20" width="20" /></g><g
+          ><polygon
+            points="13,10 15,10 9.97,3 5,10 7,10 4,14 9,14 9,17 11.03,17 11.03,14 16,14"
+          /></g
+        ></svg
+      ><span>{trees} {trees === 1 ? 'tree': 'trees'}</span>
+    </h5>
+  </div>
 </li>
 
 <style>
@@ -54,6 +70,9 @@
   .route-info {
     margin-bottom: 0.375rem;
   }
+  .emissions {
+    text-align: right;
+  }
   h2 {
     font-size: 1.1rem;
     margin: 0;
@@ -67,9 +86,19 @@
     border-radius: 3px;
     opacity: 0.85;
   }
+  h5 {
+    font-size: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+    opacity: 0.9;
+  }
+  svg {
+    fill: var(--itinerary-text-color);
+  }
   h3 {
     font-size: 1.25rem;
-    margin: 0;
+    margin: 0.25rem 0 1px;
   }
   h3 span {
     font-weight: normal;
