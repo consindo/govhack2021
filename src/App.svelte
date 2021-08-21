@@ -271,6 +271,9 @@
     {#if loading}
       <Loader />
     {/if}
+    {#if itineraries.length === 0 && !loading}
+      <p class="not-found">No routes found - choose somewhere nearby, and try again!</p>
+    {/if}
     <ul>
       {#each itineraries as itinerary}
         <Itinerary {itinerary} />
@@ -373,6 +376,11 @@
   p {
     font-size: 0.9rem;
     margin-top: 0.5rem;
+  }
+
+  .not-found {
+    text-align: center;
+    margin: 2rem;
   }
 
   .radio-group-wrapper {

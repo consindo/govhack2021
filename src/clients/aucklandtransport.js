@@ -120,6 +120,7 @@ export const geocode = async (searchString) => {
 
 export const processPlan = (plan, options) => {
   if (plan === null) return null
+  if (plan === 'Error returned from journey planner service') return null
   const itineraryDescriptions = {}
   const itineraries = plan.response.itineraries
     .map((i) => {
@@ -246,6 +247,7 @@ export const processPlan = (plan, options) => {
 
 export const processRoadPlan = (roadPlan, mode, options) => {
   if (roadPlan === null) return null
+  if (roadPlan.response.itineraries.length === 0) return null
   const description = mode
   mode = mode.toLowerCase()
 
