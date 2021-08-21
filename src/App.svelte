@@ -58,6 +58,15 @@
   }
   $: loadPt(mapBounds, travelTime)
 
+  let sortType = 'emissions'
+  const changeSortType = () => {
+    if (sortType === 'emissions') {
+      sortType = 'time'
+    } else {
+      sortType = 'emissions'
+    }
+  } 
+
   let walkSpeed = 5
   let walkSpeeds = [5, 7, 9]
 
@@ -147,7 +156,11 @@
     })
     .flat()
     .sort((a, b) => {
-      return a.total.carbonEmissions - b.total.carbonEmissions
+      if (sortType === 'emissions') {
+        return a.total.carbonEmissions - b.total.carbonEmissions  
+      } else if (sortType === 'time') {
+        return a.total.timeMinutes - b.total.timeMinutes  
+      }
     })
 </script>
 
@@ -263,9 +276,9 @@
   </div>
   <div class="results">
     {#if itineraries.length > 0}
-      <div class="sort-wrapper">
+      <div class="sort-wrapper" on:click={changeSortType}>
         <img role="presentation" alt="" src="/south_white_18dp.svg" />
-        <span>Sorted by emissions</span>
+        <span>Sorted by {sortType}</span>
       </div>
     {/if}
     {#if loading}
@@ -402,12 +415,17 @@
     background: #24262f;
     color: #fff;
     align-items: center;
+    user-select: none;
+    cursor: pointer;
   }
   .sort-wrapper span {
     flex: 1;
   }
   .sort-wrapper img {
     margin-right: 3px;
+  }
+  .sort-wrapper:hover {
+    text-decoration: underline;
   }
 
   ul {
