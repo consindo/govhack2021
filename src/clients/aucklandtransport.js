@@ -2,7 +2,7 @@ const apikey = process.env.AT_APIKEY
 const endpoint = 'https://api.at.govt.nz'
 
 import { calculateDistance } from './distance.js'
-import { calculateCarbon } from './carbonemissions.js'
+import { calculateCarbon, calculateFuel } from './carbonemissions.js'
 
 // at api wants commas to be encoded in some fields but not others
 const paramsToQuery = (params) =>
@@ -267,6 +267,7 @@ export const processRoadPlan = (roadPlan, mode, options) => {
   let timeMinutes = roadPlan.response.itineraries[0].DurationMinutes
 
   // base walk is 5km/h and bike is 15km/h
+  let cost = 0
   const speed = options.speed
   if (mode === 'walk') {
     timeMinutes = Math.round((timeMinutes * 5) / speed)
@@ -276,6 +277,11 @@ export const processRoadPlan = (roadPlan, mode, options) => {
     if (options.travelTime === 'peak') {
       timeMinutes = Math.round(timeMinutes * 1.5)
     }
+    cost = calculateFuel(
+      distanceKilometers,
+      timeMinutes,
+      options.emissionOptions
+    )
   }
   const carbonEmissions = calculateCarbon(
     distanceKilometers,
@@ -291,6 +297,7 @@ export const processRoadPlan = (roadPlan, mode, options) => {
           distanceKilometers,
           timeMinutes,
           carbonEmissions,
+          cost,
           index: 0,
           showLayer: mode !== 'ebike',
           route: geojson,
