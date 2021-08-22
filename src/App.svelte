@@ -65,7 +65,7 @@
     } else {
       sortType = 'emissions'
     }
-  } 
+  }
 
   let walkSpeed = 5
   let walkSpeeds = [5, 7, 9]
@@ -157,9 +157,9 @@
     .flat()
     .sort((a, b) => {
       if (sortType === 'emissions') {
-        return a.total.carbonEmissions - b.total.carbonEmissions  
+        return a.total.carbonEmissions - b.total.carbonEmissions
       } else if (sortType === 'time') {
-        return a.total.timeMinutes - b.total.timeMinutes  
+        return a.total.timeMinutes - b.total.timeMinutes
       }
     })
 </script>
@@ -285,7 +285,9 @@
       <Loader />
     {/if}
     {#if itineraries.length === 0 && !loading}
-      <p class="not-found">No routes found - choose somewhere nearby, and try again!</p>
+      <p class="not-found">
+        No routes found - choose somewhere nearby, and try again!
+      </p>
     {/if}
     <ul>
       {#each itineraries as itinerary}
