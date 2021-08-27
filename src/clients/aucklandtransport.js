@@ -1,6 +1,7 @@
 const apikey = process.env.AT_APIKEY
 const endpoint = 'https://api.at.govt.nz'
 
+import polyline from '@mapbox/polyline'
 import { calculateDistance } from './distance.js'
 import { calculateCarbon, calculateFuel } from './carbonemissions.js'
 
@@ -158,8 +159,10 @@ export const processPlan = (plan, options) => {
             coordinates: [],
           },
         }
-        // create a vector
-        if (j.stops.length > 0) {
+        if (j.legGeometry && j.legGeometry.type === 'Polyline') {
+          geojson.geometry = polyline.toGeoJSON(j.legGeometry.points)
+        } else if (j.stops.length > 0) {
+          // create a vector between each stop
           geojson.geometry.coordinates = j.stops.map((k) =>
             k.geometry.data
               .slice()

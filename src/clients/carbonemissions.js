@@ -47,7 +47,6 @@ export const calculateFuel = (
       currentValue = Object.keys(accumulator).filter(
         (i) => i !== 'co2_per_km'
       )[0]
-      console.log(currentValue)
     }
     return accumulator[currentValue]
   }, emissions)
