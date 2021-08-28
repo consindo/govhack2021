@@ -18,7 +18,7 @@ export const plan = async (search, options) => {
   let date = new Date()
   date.setHours(23)
   date.setMinutes(59)
-  if (date.getDay() === 5) {
+  if (date.getDay() === 6) {
     date.setDate(date.getDate() + 2)
   } else if (date.getDay() === 0) {
     date.setDate(date.getDate() + 1)

@@ -1,5 +1,6 @@
 {
   "Car": {
+    "info": "data sourced from rightcar.govt.nz",
     "Large": {
       "diesel": {
         "1 passenger": {
@@ -587,10 +588,25 @@
     }
   },
   "Bike": {
-    "Pedal": 21.0,
-    "eBike": 14.8
+    "Pedal": {
+      "info": "data sourced from https://www.nature.com/articles/s41598-020-66170-y",
+      "low": 6,
+      "medium": 14,
+      "high": 28
+    },
+    "eBike": {
+      "info": "estimated at 70% of cycling emissions",
+      "low": 4.2,
+      "medium": 9.8,
+      "high": 19.6
+    }
   },
-  "Foot": 56.0,
+  "Foot": {
+    "info": "data sourced from https://www.nature.com/articles/s41598-020-66170-y",
+    "low": 12,
+    "medium": 26,
+    "high": 53
+  },
   "Ferry": {
     "Car ferry": 129.518,
     "Passenger ferry": 18.738

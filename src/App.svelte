@@ -67,6 +67,9 @@
     }
   }
 
+  let diet = "medium"
+  let diets = ['low', 'medium', 'high']
+
   let walkSpeed = 5
   let walkSpeeds = [5, 7, 9]
 
@@ -118,7 +121,7 @@
   $: itineraries = [
     processPlan(ptData, {
       emissionOptions: {
-        walk: ['Foot'],
+        walk: ['Foot', diet],
         bus: ['Bus', busPower, travelTime],
         train: ['Rail', trainPower],
         ferry: ['Ferry', 'Passenger ferry'],
@@ -127,17 +130,17 @@
     processRoadPlan(cycleData, 'Bike', {
       travelTime,
       speed: bikeSpeed,
-      emissionOptions: ['Bike', 'Pedal'],
+      emissionOptions: ['Bike', 'Pedal', diet],
     }),
     processRoadPlan(cycleData, 'eBike', {
       travelTime,
       speed: ebikeSpeed,
-      emissionOptions: ['Bike', 'eBike'],
+      emissionOptions: ['Bike', 'eBike', diet],
     }),
     processRoadPlan(walkData, 'Walk', {
       travelTime,
       speed: walkSpeed,
-      emissionOptions: ['Foot'],
+      emissionOptions: ['Foot', diet],
     }),
     processRoadPlan(driveData, 'Drive', {
       travelTime,
@@ -202,9 +205,13 @@
         <div class="section-wrapper">
           <p>
             Walking &amp; cycling are great options for shorter trips. You’ll
-            lower your carbon emissions by traveling faster, and you’ll become
+            lower your carbon emissions by eating better, traveling faster, and you’ll become
             more healthy too!
           </p>
+          <h4>Diet Emissions</h4>
+          <RadioButton collection={diets} bind:group={diet} />
+          <p>Your walking & cycling emissions are heavily dependent on what you eat. Eating less red meat & more local produce can signficantly reduce your carbon impact.</p>
+
           <h4>Walking Speed</h4>
           <RadioButton collection={walkSpeeds} bind:group={walkSpeed} />
 
