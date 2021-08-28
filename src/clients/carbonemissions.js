@@ -24,7 +24,14 @@ export const calculateCarbon = (
     return accumulator[currentValue]
   }, emissions)
 
-  const speed = (distanceKilometers / timeMinutes) * 60
+  let speed = (distanceKilometers / timeMinutes) * 60
+  // this equation is designed for vehicles, so add speed offsets for walking & cycling
+  if (emissionOptions[0] === 'Foot') {
+    speed += 30
+  } else if (emissionOptions[0] === 'Bike') {
+    speed += 25
+  }
+
   const speedFactor =
     0.0004 * Math.pow(speed / 10, 4) -
     0.0147 * Math.pow(speed / 10, 3) +
