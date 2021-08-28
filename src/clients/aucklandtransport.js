@@ -193,7 +193,9 @@ export const processPlan = (plan, options) => {
       let carbonEmissions = 0
       const geojson = {
         type: 'Feature',
-        properties: {},
+        properties: {
+          title: '',
+        },
         geometry: {
           type: 'LineString',
           coordinates: [],
@@ -210,10 +212,11 @@ export const processPlan = (plan, options) => {
       geojson.geometry.coordinates = geojson.geometry.coordinates.flat()
       allModes.delete('walk')
       allRoutes.delete('')
-      const description =
-        Array.from(allModes)
-          .map((str) => str.charAt(0).toUpperCase() + str.slice(1))
-          .join(' & ') + ` (${Array.from(allRoutes).join(' + ')})`
+      const secondaryDescription = Array.from(allRoutes).join(' + ')
+      const description = `${Array.from(allModes)
+        .map((str) => str.charAt(0).toUpperCase() + str.slice(1))
+        .join(' & ')} (${secondaryDescription})`
+      geojson.properties.title = secondaryDescription
 
       return {
         total: {
@@ -260,7 +263,9 @@ export const processRoadPlan = (roadPlan, mode, options) => {
   ).flat()
   const geojson = {
     type: 'Feature',
-    properties: {},
+    properties: {
+      title: description,
+    },
     geometry: {
       type: 'LineString',
       coordinates: coordinates.map((i) => i.slice().reverse()),

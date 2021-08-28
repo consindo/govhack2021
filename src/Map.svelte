@@ -4,6 +4,7 @@
 
   export let itineraries, mapBounds
 
+  const iconScale = window.devicePixelRatio > 1 ? 0.5 : 1
   const token = process.env.MAPBOX_TOKEN
   mapboxgl.accessToken = token
 
@@ -18,9 +19,23 @@
     })
 
     map.on('load', () => {
-      map.loadImage('/location-marker.png', (error, image) => {
-        if (error) return console.warn('could not load marker')
-        map.addImage('location-marker', image)
+      ;[
+        '/location-marker-1x.png',
+        '/modes/bike-mask-1x.png',
+        '/modes/drive-mask-1x.png',
+        '/modes/walk-mask-1x.png',
+      ].forEach((file) => {
+        if (window.devicePixelRatio > 1) {
+          file = file.replace('-1x', '-2x')
+        }
+        map.loadImage(file, (error, image) => {
+          if (error) return console.warn('could not load', filename, error)
+          const name = file
+            .split('/')
+            .slice(-1)[0]
+            .replace(/-\dx\.png/, '')
+          map.addImage(name, image)
+        })
       })
     })
   })
@@ -80,7 +95,7 @@
           source: 'to-from',
           layout: {
             'icon-image': 'location-marker',
-            'icon-size': 0.5,
+            'icon-size': iconScale,
             'icon-offset': [0, -10],
             'text-offset': [0, -7],
             // get the title name from the source's "title" property
@@ -88,11 +103,11 @@
             'text-offset': [0, 1.25],
             'text-anchor': 'top',
             'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
-            'text-size': 13,
+            'text-size': 12,
           },
           paint: {
             'text-halo-color': 'rgba(255,255,255,0.85)',
-            'text-halo-width': 2,
+            'text-halo-width': 1.5,
           },
         })
 
@@ -104,7 +119,8 @@
     const currentItineraries = itineraries.map((i) => i.total.description)
     Object.keys(loadedLayers).forEach((i) => {
       if (!currentItineraries.includes(i)) {
-        map.removeLayer(i)
+        map.removeLayer(`${i}-line`)
+        map.removeLayer(`${i}-symbol`)
         map.removeSource(i)
         delete loadedLayers[i]
       }
@@ -114,18 +130,19 @@
       const id = i.total.description
       // deduplicates layers
       if (loadedLayers[id] === undefined && i.total.showLayer === true) {
+        console.log(loadedLayers)
         loadedLayers[id] = true
       } else {
         return
       }
 
-      const getStacking = () => {
+      const getStacking = (type) => {
         if (id !== 'Walk' && loadedLayers['Walk'] !== undefined) {
-          return 'Walk'
+          return `Walk-${type}`
         } else if (id !== 'Bike' && loadedLayers['Bike'] !== undefined) {
-          return 'Bike'
+          return `Bike-${type}`
         } else if (id !== 'Drive' && loadedLayers['Drive'] !== undefined) {
-          return 'Drive'
+          return `Drive-${type}`
         }
         return 'to-from'
       }
@@ -139,7 +156,7 @@
 
       map.addLayer(
         {
-          id,
+          id: `${id}-line`,
           type: 'line',
           source: id,
           layout: {
@@ -151,7 +168,37 @@
             'line-width': 5,
           },
         },
-        getStacking()
+        getStacking('line')
+      )
+
+      const iconStyles = {
+        'icon-image': `${id.toLowerCase()}-mask`,
+        'icon-size': iconScale,
+        'symbol-placement': 'line',
+        'icon-keep-upright': true,
+        'icon-rotation-alignment': 'viewport',
+      }
+      const textStyles = {
+        'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+        'text-field': '{title}', // part 2 of this is how to do it
+        'text-size': 13,
+        'symbol-placement': 'line',
+      }
+
+      map.addLayer(
+        {
+          id: `${id}-symbol`,
+          type: 'symbol',
+          source: id,
+          layout: ['Walk', 'Bike', 'Drive'].includes(id)
+            ? iconStyles
+            : textStyles,
+          paint: {
+            'text-halo-color': 'rgba(255,255,255,0.85)',
+            'text-halo-width': 2,
+          },
+        },
+        getStacking('symbol')
       )
     })
   })

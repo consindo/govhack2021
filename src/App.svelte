@@ -67,7 +67,7 @@
     }
   }
 
-  let diet = "medium"
+  let diet = 'medium'
   let diets = ['low', 'medium', 'high']
 
   let walkSpeed = 5
@@ -205,12 +205,16 @@
         <div class="section-wrapper">
           <p>
             Walking &amp; cycling are great options for shorter trips. You’ll
-            lower your carbon emissions by eating better, traveling faster, and you’ll become
-            more healthy too!
+            lower your carbon emissions by eating better, traveling faster, and
+            you’ll become more healthy too!
           </p>
           <h4>Diet Emissions</h4>
           <RadioButton collection={diets} bind:group={diet} />
-          <p>Your walking & cycling emissions are heavily dependent on what you eat. Eating less red meat & more local produce can signficantly reduce your carbon impact.</p>
+          <p>
+            Your walking & cycling emissions are heavily dependent on what you
+            eat. Eating less red meat & more local produce can signficantly
+            reduce your carbon impact.
+          </p>
 
           <h4>Walking Speed</h4>
           <RadioButton collection={walkSpeeds} bind:group={walkSpeed} />
