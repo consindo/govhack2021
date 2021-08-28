@@ -60,7 +60,7 @@
       {#if itinerary.total.cost}
         &middot; ${(itinerary.total.cost / 100).toFixed(2)}
         {#if itinerary.total.description === 'Drive'}
-          <span class="parking">+ 🅿</span>
+          + <span class="parking">P</span>
         {/if}
       {/if}
     </p>
@@ -147,5 +147,13 @@
   p {
     margin: 0;
     font-size: 0.9rem;
+  }
+  .parking {
+    display: inline-block;
+    background: #fff;
+    color: var(--itinerary-color);
+    font-weight: bold;
+    padding: 0 2px 0 3px;
+    border-radius: 2px;
   }
 </style>
