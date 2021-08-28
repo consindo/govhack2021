@@ -119,7 +119,7 @@
     processPlan(ptData, {
       emissionOptions: {
         walk: ['Foot'],
-        bus: ['Bus', busPower],
+        bus: ['Bus', busPower, travelTime],
         train: ['Rail', trainPower],
         ferry: ['Ferry', 'Passenger ferry'],
       },

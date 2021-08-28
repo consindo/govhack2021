@@ -577,8 +577,14 @@
     "Electric": 28.0
   },
   "Bus": {
-    "Diesel": 104.71,
-    "Electric": 50.0
+    "Diesel": {
+      "off-peak": 104.71,
+      "peak": 69.3
+    },
+    "Electric": {
+      "off-peak": 50.0,
+      "peak": 33.3
+    }
   },
   "Bike": {
     "Pedal": 21.0,

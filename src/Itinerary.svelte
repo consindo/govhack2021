@@ -59,6 +59,9 @@
       )}<small>km</small>
       {#if itinerary.total.cost}
         &middot; ${(itinerary.total.cost / 100).toFixed(2)}
+        {#if itinerary.total.description === 'Drive'}
+        <span class="parking">+ 🅿</span>
+        {/if}
       {/if}
     </p>
   </div>
