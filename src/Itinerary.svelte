@@ -37,7 +37,7 @@
     round(itinerary.total.carbonEmissions / 6, 100)
 </script>
 
-<li style="--itinerary-color: {color[0]}; --itinerary-text-color: {color[1]}">
+<li style="--itinerary-color: {color[0]}; --itinerary-text-color: {color[1]}" title="It takes {trees} {trees === 1 ? 'tree' : 'trees'} one year to remove {round(itinerary.total.carbonEmissions)}kg of carbon dioxide from the atmosphere">
   <div class="description">
     <div class="route-info-wrapper">
       <img
@@ -93,6 +93,7 @@
     display: flex;
     align-items: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    user-select: none;
   }
   .description {
     flex: 1;
