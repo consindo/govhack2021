@@ -130,7 +130,6 @@
       const id = i.total.description
       // deduplicates layers
       if (loadedLayers[id] === undefined && i.total.showLayer === true) {
-        console.log(loadedLayers)
         loadedLayers[id] = true
       } else {
         return

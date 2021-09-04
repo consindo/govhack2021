@@ -117,6 +117,7 @@
   let activeVisible = false
   let ptVisible = false
   let carVisible = false
+  let creditsVisible = false
 
   $: itineraries = [
     processPlan(ptData, {
@@ -283,6 +284,59 @@
           <RadioButton collection={carPassengers} bind:group={carPassenger} />
         </div>
       {/if}
+      <h3 on:click={() => (creditsVisible = !creditsVisible)}>
+        <span>Info &amp; Credits</span>
+        <img
+          alt="expand / collapse"
+          src="/expand_less_black_24dp.svg"
+          style={!creditsVisible ? 'transform: rotate(180deg)' : ''}
+        />
+      </h3>
+      {#if creditsVisible}
+        <div class="section-wrapper">
+          <p>
+            We built Net Zero Waka to help you make travel choices. We wouldn't
+            have been able to create this without leaning on a number of
+            different data sources.
+          </p>
+          <p>This app is open source—contributions are welcome!</p>
+          <p>
+            <a href="https://github.com/consindo/govhack2021"
+              >github.com/consindo/govhack2021</a
+            >
+          </p>
+          <h4>Data Sources</h4>
+          <ul class="credits-list">
+            <li>
+              <a href="https://at.govt.nz">Auckland Transport</a> Routing & Directions
+            </li>
+            <li>
+              <a
+                href="https://www.mbie.govt.nz/building-and-energy/energy-and-natural-resources/energy-statistics-and-modelling/energy-statistics/new-zealand-energy-sector-greenhouse-gas-emissions/"
+                >MBIE</a
+              > NZ Emissions
+            </li>
+            <li>
+              <a href="https://ourworldindata.org/travel-carbon-footprint"
+                >Our World in Data</a
+              >
+              Core CO<sub>2</sub> emission calculations
+            </li>
+            <li>
+              <a href="https://rightcar.govt.nz">Rightcar</a> Vehicle Emissions
+            </li>
+            <li>
+              <a
+                href="https://genless.govt.nz/assets/Everyone-Resources/electric-vehicle-running-cost-calculations.xlsx"
+                >Gen Less</a
+              > EV Running Costs
+            </li>
+            <li>
+              <a href="https://www.mapbox.com/">Mapbox & OpenStreetMap</a> Base Map
+            </li>
+          </ul>
+        </div>
+      {/if}
     </div>
   </div>
   <div class="results">
@@ -417,6 +471,18 @@
   .radio-group-wrapper h4 {
     margin: 0;
     flex: 1;
+  }
+
+  .credits-list {
+    font-size: 13px;
+    list-style-type: disc;
+    padding-left: 0.5em;
+  }
+  .credits-list li {
+    margin-bottom: 0.5em;
+  }
+  .credits-list a {
+    display: block;
   }
 
   .sort-wrapper {
