@@ -159,7 +159,7 @@
   p {
     font-size: 14px;
   }
-  @media (min-width:  350px) {
+  @media (min-width: 350px) {
     main {
       padding: 2rem 1rem;
     }

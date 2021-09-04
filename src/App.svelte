@@ -171,11 +171,13 @@
 
 <Splash on:search={handleSearch} />
 <main>
-  <div class={queryCollapsed ? "query collapsed" : "query"}>
+  <div class={queryCollapsed ? 'query collapsed' : 'query'}>
     <div class="brand">
       <img class="brand-img" src="/icon.png" alt="logo" />
       <h1>Net Zero Waka</h1>
-      <button class="close" on:click={() => queryCollapsed = true}><img alt="Close" src="/close_white_24dp.svg" /></button>
+      <button class="close" on:click={() => (queryCollapsed = true)}
+        ><img alt="Close" src="/close_white_24dp.svg" /></button
+      >
     </div>
     <div class="section-wrapper search-wrapper">
       <h2>Plan a journey</h2>
@@ -341,13 +343,21 @@
       {/if}
     </div>
   </div>
-  <div class={queryCollapsed ? "map-results-wrapper" : "map-results-wrapper opacity"}>
+  <div
+    class={queryCollapsed
+      ? 'map-results-wrapper'
+      : 'map-results-wrapper opacity'}
+  >
     <div class="results">
       {#if itineraries.length > 0}
         <div class="sort-wrapper">
           <h3>Trips</h3>
           <div class="sort-button" on:click={changeSortType}>
-            <span>Sorted by {sortType}</span><img role="presentation" alt="" src="/south_white_18dp.svg" />
+            <span>Sorted by {sortType}</span><img
+              role="presentation"
+              alt=""
+              src="/south_white_18dp.svg"
+            />
           </div>
         </div>
       {/if}
@@ -366,11 +376,13 @@
       </ul>
     </div>
     <div class="map">
-      <button on:click={() => queryCollapsed = false}>Trip Options<img
+      <button on:click={() => (queryCollapsed = false)}
+        >Trip Options<img
           alt=""
           role="presentation"
           src="/expand_less_black_24dp.svg"
-        /></button>
+        /></button
+      >
       <MapView {itineraries} {mapBounds} />
     </div>
   </div>
@@ -597,10 +609,10 @@
   .map button {
     position: absolute;
     top: 0.5rem;
-    background: rgba(255,255,255,0.85);
+    background: rgba(255, 255, 255, 0.85);
     font-weight: bold;
     border: 0;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
     z-index: 5;
     font-size: 0.9rem;
     padding: 0.5rem 0.625rem;
@@ -643,10 +655,10 @@
     }
 
     .query.collapsed {
-      transform: translate3d(301px,0,0);
+      transform: translate3d(301px, 0, 0);
     }
   }
-  @media (max-width: 700px) {
+  @media (max-width: 649px) {
     .map-results-wrapper {
       flex-direction: column-reverse;
       transition: 300ms ease opacity;
@@ -665,12 +677,11 @@
       box-shadow: 1px 0 0 rgba(0, 0, 0, 0.2);
     }
     .query.collapsed {
-      transform: translate3d(-301px,0,0);
+      transform: translate3d(-301px, 0, 0);
     }
     .map button {
       left: 0.5rem;
       right: auto;
     }
   }
-
 </style>
