@@ -118,6 +118,7 @@
   let ptVisible = false
   let carVisible = false
   let creditsVisible = false
+  let queryCollapsed = true
 
   $: itineraries = [
     processPlan(ptData, {
@@ -170,10 +171,11 @@
 
 <Splash on:search={handleSearch} />
 <main>
-  <div class="query">
+  <div class={queryCollapsed ? "query collapsed" : "query"}>
     <div class="brand">
-      <img src="/icon.png" alt="logo" />
+      <img class="brand-img" src="/icon.png" alt="logo" />
       <h1>Net Zero Waka</h1>
+      <button class="close" on:click={() => queryCollapsed = true}><img alt="Close" src="/close_white_24dp.svg" /></button>
     </div>
     <div class="section-wrapper search-wrapper">
       <h2>Plan a journey</h2>
@@ -339,29 +341,38 @@
       {/if}
     </div>
   </div>
-  <div class="results">
-    {#if itineraries.length > 0}
-      <div class="sort-wrapper" on:click={changeSortType}>
-        <img role="presentation" alt="" src="/south_white_18dp.svg" />
-        <span>Sorted by {sortType}</span>
-      </div>
-    {/if}
-    {#if loading}
-      <Loader />
-    {/if}
-    {#if itineraries.length === 0 && !loading}
-      <p class="not-found">
-        No routes found - choose somewhere nearby, and try again!
-      </p>
-    {/if}
-    <ul>
-      {#each itineraries as itinerary}
-        <Itinerary {itinerary} />
-      {/each}
-    </ul>
-  </div>
-  <div class="map">
-    <MapView {itineraries} {mapBounds} />
+  <div class={queryCollapsed ? "map-results-wrapper" : "map-results-wrapper opacity"}>
+    <div class="results">
+      {#if itineraries.length > 0}
+        <div class="sort-wrapper">
+          <h3>Trips</h3>
+          <div class="sort-button" on:click={changeSortType}>
+            <span>Sorted by {sortType}</span><img role="presentation" alt="" src="/south_white_18dp.svg" />
+          </div>
+        </div>
+      {/if}
+      {#if loading}
+        <Loader />
+      {/if}
+      {#if itineraries.length === 0 && !loading}
+        <p class="not-found">
+          No routes found - choose somewhere nearby, and try again!
+        </p>
+      {/if}
+      <ul>
+        {#each itineraries as itinerary}
+          <Itinerary {itinerary} />
+        {/each}
+      </ul>
+    </div>
+    <div class="map">
+      <button on:click={() => queryCollapsed = false}>Trip Options<img
+          alt=""
+          role="presentation"
+          src="/expand_less_black_24dp.svg"
+        /></button>
+      <MapView {itineraries} {mapBounds} />
+    </div>
   </div>
 </main>
 
@@ -369,6 +380,13 @@
   main {
     margin: 0 auto;
     display: flex;
+    height: 100%;
+    height: -webkit-fill-available;
+  }
+
+  .map-results-wrapper {
+    display: flex;
+    flex: 1;
     height: 100%;
   }
 
@@ -378,12 +396,35 @@
     padding: 1rem;
     display: flex;
     align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1;
   }
 
-  .brand img {
+  .brand .brand-img {
     width: 2rem;
     height: 2rem;
     margin-right: 0.625rem;
+  }
+
+  .brand .close {
+    flex: 1;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    margin: 0;
+    text-align: right;
+    opacity: 0.8;
+    display: none;
+  }
+  .brand .close:hover {
+    opacity: 1;
+  }
+  .brand .close:active {
+    opacity: 0.6;
+  }
+  .brand .close img {
+    vertical-align: top;
   }
 
   h1 {
@@ -427,7 +468,7 @@
     margin: 1rem 0 0.75rem;
   }
 
-  h3 {
+  .query h3 {
     font-size: 1.125rem;
     padding: 0.75rem 1rem;
     margin: 0;
@@ -456,6 +497,30 @@
   p {
     font-size: 0.9rem;
     margin-top: 0.5rem;
+  }
+
+  @media (max-width: 1000px) {
+    .brand {
+      padding: 0.5rem;
+    }
+    .brand .brand-img {
+      width: 1.5rem;
+      height: 1.5rem;
+      margin-right: 0.375rem;
+    }
+    .brand .close {
+      display: block;
+    }
+
+    h1 {
+      font-size: 1rem;
+    }
+    h2 {
+      font-size: 1.1rem;
+    }
+    .query h3 {
+      padding: 0.625rem 1rem 0.5rem;
+    }
   }
 
   .not-found {
@@ -490,20 +555,32 @@
     padding: 0.375rem 0.5rem;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     font-weight: bold;
-    font-size: 0.825rem;
     background: #24262f;
     color: #fff;
     align-items: center;
     user-select: none;
-    cursor: pointer;
+    line-height: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  .sort-wrapper h3 {
+    flex: 1;
+    margin: 0;
+    font-size: 0.9rem;
+    background: none;
   }
   .sort-wrapper span {
-    flex: 1;
+    font-size: 0.75rem;
   }
   .sort-wrapper img {
-    margin-right: 3px;
+    margin-left: 3px;
+    vertical-align: top;
   }
-  .sort-wrapper:hover {
+  .sort-button {
+    cursor: pointer;
+  }
+  .sort-button:hover {
     text-decoration: underline;
   }
 
@@ -516,4 +593,84 @@
   .map {
     flex: 1;
   }
+
+  .map button {
+    position: absolute;
+    top: 0.5rem;
+    background: rgba(255,255,255,0.85);
+    font-weight: bold;
+    border: 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    z-index: 5;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.625rem;
+    border-radius: 4px;
+    letter-spacing: -0.25px;
+    text-shadow: 0 1px 0 #fff;
+    display: none;
+    line-height: 20px;
+  }
+  .map button:hover {
+    background: #fff;
+  }
+  .map button:active {
+    opacity: 0.7;
+  }
+  .map button img {
+    vertical-align: top;
+    margin-top: -1px;
+    margin-right: -8px;
+    transform: rotate(90deg);
+  }
+
+  @media (max-width: 1000px) {
+    main {
+      display: block;
+      position: relative;
+    }
+    .query {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      box-shadow: -1px 0 0 rgba(0, 0, 0, 0.2);
+      z-index: 10;
+      transition: 300ms ease transform;
+    }
+    .map button {
+      right: 0.5rem;
+      display: inline-block;
+    }
+
+    .query.collapsed {
+      transform: translate3d(301px,0,0);
+    }
+  }
+  @media (max-width: 700px) {
+    .map-results-wrapper {
+      flex-direction: column-reverse;
+      transition: 300ms ease opacity;
+    }
+    .map-results-wrapper.opacity {
+      opacity: 0.25;
+    }
+    .results {
+      height: 60%;
+      width: 100%;
+      box-shadow: 0 0 1px rgba(0, 0, 0, 0.2) inset;
+    }
+    .query {
+      left: 0;
+      right: auto;
+      box-shadow: 1px 0 0 rgba(0, 0, 0, 0.2);
+    }
+    .query.collapsed {
+      transform: translate3d(-301px,0,0);
+    }
+    .map button {
+      left: 0.5rem;
+      right: auto;
+    }
+  }
+
 </style>

@@ -101,14 +101,14 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 10;
+    z-index: 20;
     height: 100%;
     width: 100%;
     box-sizing: border-box;
-    padding: 2rem 1rem;
+    padding: 1.5rem 1rem;
     transition: 300ms ease all;
     text-align: center;
-    background-image: url(/splash.jpg);
+    background-image: url(/splash.webp);
     background-color: rgb(237, 243, 243);
     background-size: cover;
     background-position: 50% 0%;
@@ -121,7 +121,7 @@
   }
 
   h1 {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
   }
 
   .wrapper {
@@ -153,6 +153,25 @@
     padding: 0;
     list-style-type: none;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  p {
+    font-size: 14px;
+  }
+  @media (min-width:  350px) {
+    main {
+      padding: 2rem 1rem;
+    }
+    .pre-selected ul {
+      flex-direction: row;
+    }
+    h1 {
+      font-size: 1.5rem;
+    }
+    p {
+      font-size: 16px;
+    }
   }
   .pre-selected li {
     user-select: none;
